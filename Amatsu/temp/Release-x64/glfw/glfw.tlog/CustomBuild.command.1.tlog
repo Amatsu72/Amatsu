@@ -1,0 +1,10 @@
+^E:\RALTS\MINIENGINE\3RDPARTY\GLFW\SRC\CMAKELISTS.TXT
+setlocal
+"C:\Program Files\CMake\bin\cmake.exe" -SE:/Ralts/MiniEngine/3rdparty/GLFW -BE:/Ralts/MiniEngine/3rdparty/GLFW/build --check-stamp-file E:/Ralts/MiniEngine/3rdparty/GLFW/build/src/CMakeFiles/generate.stamp
+if %errorlevel% neq 0 goto :cmEnd
+:cmEnd
+endlocal & call :cmErrorLevel %errorlevel% & goto :cmDone
+:cmErrorLevel
+exit /b %1
+:cmDone
+if %errorlevel% neq 0 goto :VCEnd

@@ -1,0 +1,43 @@
+﻿
+Microsoft Visual Studio Solution File, Format Version 12.00
+# Visual Studio Version 17
+VisualStudioVersion = 17.6.33829.357
+MinimumVisualStudioVersion = 10.0.40219.1
+Project("{8BC9CEB8-8B4A-11D0-8D11-00A0C91BC942}") = "Rendering", "Rendering\Rendering.vcxproj", "{E7986A65-6201-465F-8E55-20B5A3EEECF6}"
+EndProject
+Project("{8BC9CEB8-8B4A-11D0-8D11-00A0C91BC942}") = "glfw", "3rdparty\GLFW\build\src\glfw.vcxproj", "{58CF0A0B-AC74-3CCA-93BD-DD3BCE8AB64A}"
+EndProject
+Project("{8BC9CEB8-8B4A-11D0-8D11-00A0C91BC942}") = "glad", "3rdparty\glad\glad.vcxproj", "{0CA7CC32-18F9-464B-8ABD-A58A2BE82DDE}"
+EndProject
+Project("{8BC9CEB8-8B4A-11D0-8D11-00A0C91BC942}") = "imGui", "3rdparty\imGui\imGui.vcxproj", "{3342DCFE-5BC1-4E57-B139-60898E9D3172}"
+EndProject
+Global
+	GlobalSection(SolutionConfigurationPlatforms) = preSolution
+		Debug|x64 = Debug|x64
+		Release|x64 = Release|x64
+	EndGlobalSection
+	GlobalSection(ProjectConfigurationPlatforms) = postSolution
+		{E7986A65-6201-465F-8E55-20B5A3EEECF6}.Debug|x64.ActiveCfg = Debug|x64
+		{E7986A65-6201-465F-8E55-20B5A3EEECF6}.Debug|x64.Build.0 = Debug|x64
+		{E7986A65-6201-465F-8E55-20B5A3EEECF6}.Release|x64.ActiveCfg = Release|x64
+		{E7986A65-6201-465F-8E55-20B5A3EEECF6}.Release|x64.Build.0 = Release|x64
+		{58CF0A0B-AC74-3CCA-93BD-DD3BCE8AB64A}.Debug|x64.ActiveCfg = Debug|x64
+		{58CF0A0B-AC74-3CCA-93BD-DD3BCE8AB64A}.Debug|x64.Build.0 = Debug|x64
+		{58CF0A0B-AC74-3CCA-93BD-DD3BCE8AB64A}.Release|x64.ActiveCfg = Release|x64
+		{58CF0A0B-AC74-3CCA-93BD-DD3BCE8AB64A}.Release|x64.Build.0 = Release|x64
+		{0CA7CC32-18F9-464B-8ABD-A58A2BE82DDE}.Debug|x64.ActiveCfg = Debug|x64
+		{0CA7CC32-18F9-464B-8ABD-A58A2BE82DDE}.Debug|x64.Build.0 = Debug|x64
+		{0CA7CC32-18F9-464B-8ABD-A58A2BE82DDE}.Release|x64.ActiveCfg = Release|x64
+		{0CA7CC32-18F9-464B-8ABD-A58A2BE82DDE}.Release|x64.Build.0 = Release|x64
+		{3342DCFE-5BC1-4E57-B139-60898E9D3172}.Debug|x64.ActiveCfg = Debug|x64
+		{3342DCFE-5BC1-4E57-B139-60898E9D3172}.Debug|x64.Build.0 = Debug|x64
+		{3342DCFE-5BC1-4E57-B139-60898E9D3172}.Release|x64.ActiveCfg = Release|x64
+		{3342DCFE-5BC1-4E57-B139-60898E9D3172}.Release|x64.Build.0 = Release|x64
+	EndGlobalSection
+	GlobalSection(SolutionProperties) = preSolution
+		HideSolutionNode = FALSE
+	EndGlobalSection
+	GlobalSection(ExtensibilityGlobals) = postSolution
+		SolutionGuid = {14707F35-A81B-47D8-9ECC-DE989FADADE1}
+	EndGlobalSection
+EndGlobal

@@ -1,0 +1,17 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<Project ToolsVersion="17.0" xmlns="http://schemas.microsoft.com/developer/msbuild/2003">
+  <ItemGroup>
+    <CustomBuild Include="E:\Ralts\MiniEngine\3rdparty\GLFW\build\CMakeFiles\d8e2b3794f89a11b65bc99409351168e\uninstall.rule">
+      <Filter>CMake Rules</Filter>
+    </CustomBuild>
+    <CustomBuild Include="E:\Ralts\MiniEngine\3rdparty\GLFW\CMakeLists.txt" />
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="E:\Ralts\MiniEngine\3rdparty\GLFW\build\CMakeFiles\uninstall" />
+  </ItemGroup>
+  <ItemGroup>
+    <Filter Include="CMake Rules">
+      <UniqueIdentifier>{71E9BE07-D2C9-3B3D-AC58-39640DEFA825}</UniqueIdentifier>
+    </Filter>
+  </ItemGroup>
+</Project>
