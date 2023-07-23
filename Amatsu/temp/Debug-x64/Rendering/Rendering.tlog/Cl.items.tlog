@@ -1,3 +1,10 @@
 E:\Ralts\Amatsu\3rdparty\stb_image\stb_image.cpp;E:\Ralts\Amatsu\Amatsu\temp\Debug-x64\Rendering\stb_image.obj
+E:\Ralts\Amatsu\src\Core\Application.cpp;E:\Ralts\Amatsu\Amatsu\temp\Debug-x64\Rendering\Application.obj
+E:\Ralts\Amatsu\src\ImGUI\ImGuiBuild.cpp;E:\Ralts\Amatsu\Amatsu\temp\Debug-x64\Rendering\ImGuiBuild.obj
 E:\Ralts\Amatsu\src\main.cpp;E:\Ralts\Amatsu\Amatsu\temp\Debug-x64\Rendering\main.obj
+E:\Ralts\Amatsu\src\Paltform\OpenGL\OpenGLContext.cpp;E:\Ralts\Amatsu\Amatsu\temp\Debug-x64\Rendering\OpenGLContext.obj
+E:\Ralts\Amatsu\src\Paltform\Windows\WindowsInput.cpp;E:\Ralts\Amatsu\Amatsu\temp\Debug-x64\Rendering\WindowsInput.obj
+E:\Ralts\Amatsu\src\Paltform\Windows\WindowsWindow.cpp;E:\Ralts\Amatsu\Amatsu\temp\Debug-x64\Rendering\WindowsWindow.obj
 E:\Ralts\Amatsu\src\pch.cpp;E:\Ralts\Amatsu\Amatsu\temp\Debug-x64\Rendering\pch.obj
+E:\Ralts\Amatsu\src\Renderer\Rendering.cpp;E:\Ralts\Amatsu\Amatsu\temp\Debug-x64\Rendering\Rendering.obj
+E:\Ralts\Amatsu\src\UI\UI.cpp;E:\Ralts\Amatsu\Amatsu\temp\Debug-x64\Rendering\UI.obj
