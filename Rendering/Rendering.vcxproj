@@ -91,7 +91,9 @@
       <PrecompiledHeader Condition="'$(Configuration)|$(Platform)'=='Release|x64'">Use</PrecompiledHeader>
       <PrecompiledHeaderFile Condition="'$(Configuration)|$(Platform)'=='Release|x64'">pch.h</PrecompiledHeaderFile>
     </ClCompile>
+    <ClCompile Include="..\src\Paltform\OpenGL\OpenGLBuffer.cpp" />
     <ClCompile Include="..\src\Paltform\OpenGL\OpenGLContext.cpp" />
+    <ClCompile Include="..\src\Paltform\OpenGL\OpenGLVertexArray.cpp" />
     <ClCompile Include="..\src\Paltform\Windows\WindowsInput.cpp" />
     <ClCompile Include="..\src\Paltform\Windows\WindowsWindow.cpp" />
     <ClCompile Include="..\src\pch.cpp">
@@ -100,7 +102,11 @@
       <PrecompiledHeader Condition="'$(Configuration)|$(Platform)'=='Release|x64'">Create</PrecompiledHeader>
       <PrecompiledHeaderFile Condition="'$(Configuration)|$(Platform)'=='Release|x64'">pch.h</PrecompiledHeaderFile>
     </ClCompile>
-    <ClCompile Include="..\src\Renderer\Rendering.cpp" />
+    <ClCompile Include="..\src\Renderer\Buffer.cpp" />
+    <ClCompile Include="..\src\Renderer\Camera.cpp" />
+    <ClCompile Include="..\src\Renderer\CameraController.cpp" />
+    <ClCompile Include="..\src\Renderer\Scene.cpp" />
+    <ClCompile Include="..\src\Renderer\VertexArray.cpp" />
     <ClCompile Include="..\src\UI\UI.cpp" />
   </ItemGroup>
   <ItemGroup>
@@ -127,11 +133,17 @@
     <ClInclude Include="..\src\Event\Event.h" />
     <ClInclude Include="..\src\Event\KeyEvent.h" />
     <ClInclude Include="..\src\Event\MouseEvent.h" />
+    <ClInclude Include="..\src\Paltform\OpenGL\OpenGLBuffer.h" />
     <ClInclude Include="..\src\Paltform\OpenGL\OpenGLContext.h" />
+    <ClInclude Include="..\src\Paltform\OpenGL\OpenGLVertexArray.h" />
     <ClInclude Include="..\src\Paltform\Windows\WindowsWindow.h" />
     <ClInclude Include="..\src\pch.h" />
+    <ClInclude Include="..\src\Renderer\Buffer.h" />
+    <ClInclude Include="..\src\Renderer\Camera.h" />
+    <ClInclude Include="..\src\Renderer\CameraController.h" />
     <ClInclude Include="..\src\Renderer\GraphicsContext.h" />
-    <ClInclude Include="..\src\Renderer\Rendering.h" />
+    <ClInclude Include="..\src\Renderer\Scene.h" />
+    <ClInclude Include="..\src\Renderer\VertexArray.h" />
     <ClInclude Include="..\src\UI\UI.h" />
   </ItemGroup>
   <Import Project="$(VCTargetsPath)\Microsoft.Cpp.targets" />

@@ -64,7 +64,6 @@ namespace Engine {
 		m_context = new OpenGLContext(m_window);
 		m_context->init();
 
-
 		glfwSetWindowUserPointer(m_window, &m_data);
 		set_VSync(true);
 

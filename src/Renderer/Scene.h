@@ -3,14 +3,15 @@
 #include <glm.hpp>
 #include <gtc/matrix_transform.hpp>
 #include <gtc/type_ptr.hpp>
+#include "CameraController.h"
 
 namespace Engine {
 
-	class Rendering
+	class Scene
 	{
 	public:
-		Rendering();
-		~Rendering(){}
+		Scene();
+		~Scene(){}
 
 		void on_update(Timestep ts);
 
@@ -19,5 +20,6 @@ namespace Engine {
 		void on_event();
 	private:
 		glm::vec3 test;
+		CameraController m_camera_controller;
 	};
 }

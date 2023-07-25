@@ -15,14 +15,15 @@ namespace Engine {
 
 	UI::UI()
 	{
-		
 	}
+
 	UI::~UI()
 	{
 		ImGui_ImplOpenGL3_Shutdown();
 		ImGui_ImplGlfw_Shutdown();
 		ImGui::DestroyContext();	
 	}
+
 	void UI::init()
 	{
 		IMGUI_CHECKVERSION();
@@ -41,7 +42,7 @@ namespace Engine {
 			style.Colors[ImGuiCol_WindowBg].w = 1.0f;
 		}
 		style.ScaleAllSizes(1.5);
-		ImGui::GetIO().FontGlobalScale = 1.5f;
+		ImGui::GetIO().FontGlobalScale = 1.0f;
 
 		Application& app = Application::get();
 		GLFWwindow* window = static_cast<GLFWwindow*>(app.get_window().get_native_window());
@@ -49,12 +50,14 @@ namespace Engine {
 		ImGui_ImplGlfw_InitForOpenGL(window, true);
 		ImGui_ImplOpenGL3_Init("#version 410");
 	}
+
 	void UI::begin()
 	{		
 		ImGui_ImplOpenGL3_NewFrame();
 		ImGui_ImplGlfw_NewFrame();
 		ImGui::NewFrame();	
 	}
+
 	void UI::end()
 	{
 		

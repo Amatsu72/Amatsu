@@ -5,8 +5,8 @@ namespace Engine {
 
 	struct WindowProps {
 		std::string Title = "Amatsu";
-		unsigned int Width = 1600;
-		unsigned int Height = 900;
+		unsigned int Width = 1280;
+		unsigned int Height = 720;
 		bool VSync = true;
 	};
 

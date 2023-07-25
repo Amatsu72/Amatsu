@@ -2,7 +2,7 @@
 #include "Window.h"
 #include "Timestep.h"
 #include "../Event/ApplicationEvent.h"
-#include "../Renderer/Rendering.h"
+#include "../Renderer/Scene.h"
 #include "../UI/UI.h"
 
 namespace Engine {
@@ -27,9 +27,9 @@ namespace Engine {
 		bool m_minimized = false;
 		float m_lastFrameTime = 0.0f;
 		std::unique_ptr<Window> m_window;
-		Rendering m_rendering;
+		Scene m_rendering;
 		std::unique_ptr<UI> m_ui;
-
+		
 		static Application* s_instance;
 	};
 

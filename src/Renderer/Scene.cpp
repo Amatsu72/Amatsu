@@ -1,19 +1,19 @@
 #include "../pch.h"
-#include "Rendering.h"
+#include "Scene.h"
 #include <imgui.h>
 
 #include <glad/glad.h>
 
 namespace Engine {
-	Rendering::Rendering()
+	Scene::Scene() :m_camera_controller(16.0f / 9.0f, 0.1f, 100.0f)
 	{
 	}
-	void Rendering::on_update(Timestep ts)
+	void Scene::on_update(Timestep ts)
 	{
 		glClearColor(0, 1, 1, 1);
 		glClear(GL_COLOR_BUFFER_BIT);
 	}
-	void Rendering::ui_render()
+	void Scene::ui_render()
 	{
 		static bool show = true;
 		ImGui::ShowDemoWindow(&show);
@@ -22,7 +22,7 @@ namespace Engine {
 		ImGui::End();
 		
 	}
-	void Rendering::on_event()
+	void Scene::on_event()
 	{
 
 	}
