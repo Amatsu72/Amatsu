@@ -15,7 +15,7 @@ namespace Engine {
 		virtual void set_index_buffer(std::shared_ptr<IndexBuffer>& index_buffer) = 0;
 
 		virtual const std::vector<std::shared_ptr<VertexBuffer>>& get_vertex_buffers() const = 0;
-		virtual const std::shared_ptr<IndexBuffer>& set_index_buffers() const = 0;
+		virtual const std::shared_ptr<IndexBuffer>& get_index_buffers() const = 0;
 
 		static std::shared_ptr<VertexArray> create();
 	};

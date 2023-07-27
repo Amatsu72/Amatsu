@@ -27,7 +27,7 @@ namespace Engine {
 		bool m_minimized = false;
 		float m_lastFrameTime = 0.0f;
 		std::unique_ptr<Window> m_window;
-		Scene m_rendering;
+		Scene m_scene;
 		std::unique_ptr<UI> m_ui;
 		
 		static Application* s_instance;

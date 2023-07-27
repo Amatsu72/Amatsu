@@ -1,5 +1,7 @@
 #include "../pch.h"
 #include "Buffer.h"
+#include "Renderer.h"
+#include "../Paltform/OpenGL/OpenGLBuffer.h"
 
 namespace Engine {
 
@@ -65,17 +67,41 @@ namespace Engine {
 
 	std::shared_ptr<VertexBuffer> VertexBuffer::create(float* vertices, uint32_t size)
 	{
-		return std::shared_ptr<VertexBuffer>();
+		switch (Renderer::get_API())
+		{
+			case RenderAPI::API::None:
+				std::cout << "RendererAPI::None is currently not supported!" << std::endl;
+				return nullptr;
+			case RenderAPI::API::OpenGL:
+				return std::make_shared<OpenGLVertexBuffer>(vertices, size);
+		}
+		return nullptr;
 	}
 
 	std::shared_ptr<VertexBuffer> VertexBuffer::create(uint32_t size)
 	{
-		return std::shared_ptr<VertexBuffer>();
+		switch (Renderer::get_API())
+		{
+			case RenderAPI::API::None:
+				std::cout << "RendererAPI::None is currently not supported!" << std::endl;
+				return nullptr;
+			case RenderAPI::API::OpenGL:
+				return std::make_shared<OpenGLVertexBuffer>(size);
+		}
+		return nullptr;
 	}
 
 	std::shared_ptr<IndexBuffer> IndexBuffer::create(uint32_t* indices, uint32_t count)
 	{
-		return std::shared_ptr<IndexBuffer>();
+		switch (Renderer::get_API())
+		{
+			case RenderAPI::API::None:
+				std::cout << "RendererAPI::None is currently not supported!" << std::endl;
+				return nullptr;
+			case RenderAPI::API::OpenGL:
+				return std::make_shared<OpenGLIndexBuffer>(indices, count);
+		}
+		return nullptr;
 	}
 
 }

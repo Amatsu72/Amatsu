@@ -13,7 +13,7 @@ namespace Engine {
 			std::cout << "Failed to initialize GLAD" << std::endl;	
 	}
 
-	void OpenGLContext::swapBuffers()
+	void OpenGLContext::swap_buffers()
 	{
 		glfwSwapBuffers(m_window_handle);
 	}

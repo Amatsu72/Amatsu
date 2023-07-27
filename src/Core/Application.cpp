@@ -2,6 +2,7 @@
 #include "Application.h"
 #include "Macro.h"
 #include <GLFW/glfw3.h>
+#include "../Renderer/Renderer.h"
 
 namespace Engine {
 
@@ -12,9 +13,8 @@ namespace Engine {
 		s_instance = this;
 		m_window = std::unique_ptr<Window>(Window::create());
 		m_window->set_event_callback(BIND_EVENT_FN(Application::on_event));
-		//to do: rendering ui init
 		
-		//Renderer::init();
+		Renderer::init();
 		m_ui = std::make_unique<UI>();
 		m_ui->init();
 	}
@@ -32,10 +32,10 @@ namespace Engine {
 			m_lastFrameTime = time;
 			if (!m_minimized)
 			{
-				m_rendering.on_update(timesetp);
+				m_scene.on_update(timesetp);
 
 				m_ui->begin();
-				m_rendering.ui_render();
+				m_scene.ui_render();
 				m_ui->end();
 			}
 			m_window->on_update();
@@ -48,7 +48,7 @@ namespace Engine {
 		dispatcher.dispatch<WindowCloseEvent>(BIND_EVENT_FN(Application::on_window_close));
 		dispatcher.dispatch<WindowResizeEvent>(BIND_EVENT_FN(Application::on_window_resize));
 		//ME_CORE_TRACE("{0}",event);
-		m_rendering.on_event();
+		m_scene.on_event(event);
 	}
 
 
@@ -66,7 +66,7 @@ namespace Engine {
 			return false;
 		}
 		m_minimized = false;
-		//Renderer::onWindowResize(e.getWidth(), e.getHeight());
+		Renderer::on_window_resize(e.get_width(), e.get_height());
 		return false;
 	}
 

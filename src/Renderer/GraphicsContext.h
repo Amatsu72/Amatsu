@@ -6,6 +6,6 @@ namespace Engine {
 	{
 	public:
 		virtual void init() = 0;
-		virtual void swapBuffers() = 0;
+		virtual void swap_buffers() = 0;
 	};
 }

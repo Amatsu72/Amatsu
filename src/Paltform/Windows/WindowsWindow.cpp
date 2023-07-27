@@ -26,7 +26,7 @@ namespace Engine {
 	void WindowsWindow::on_update()
 	{
 		glfwPollEvents();
-		m_context->swapBuffers();
+		m_context->swap_buffers();
 	}
 
 	void WindowsWindow::set_VSync(bool enable)

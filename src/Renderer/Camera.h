@@ -5,8 +5,6 @@
 
 namespace Engine {
 
-	
-
 	class Camera
 	{
 	public:

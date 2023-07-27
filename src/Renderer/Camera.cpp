@@ -2,6 +2,7 @@
 #include "Camera.h"
 
 namespace Engine{
+
 	Camera::Camera() :m_projection_matrix(1.0f), m_view_matrix(1.0f)
 	{
 		m_view_projection_matrix = m_projection_matrix * m_view_matrix;

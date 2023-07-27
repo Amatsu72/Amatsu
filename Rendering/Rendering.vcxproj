@@ -93,6 +93,9 @@
     </ClCompile>
     <ClCompile Include="..\src\Paltform\OpenGL\OpenGLBuffer.cpp" />
     <ClCompile Include="..\src\Paltform\OpenGL\OpenGLContext.cpp" />
+    <ClCompile Include="..\src\Paltform\OpenGL\OpenGLRenderAPI.cpp" />
+    <ClCompile Include="..\src\Paltform\OpenGL\OpenGLShader.cpp" />
+    <ClCompile Include="..\src\Paltform\OpenGL\OpenGLTexture.cpp" />
     <ClCompile Include="..\src\Paltform\OpenGL\OpenGLVertexArray.cpp" />
     <ClCompile Include="..\src\Paltform\Windows\WindowsInput.cpp" />
     <ClCompile Include="..\src\Paltform\Windows\WindowsWindow.cpp" />
@@ -105,7 +108,12 @@
     <ClCompile Include="..\src\Renderer\Buffer.cpp" />
     <ClCompile Include="..\src\Renderer\Camera.cpp" />
     <ClCompile Include="..\src\Renderer\CameraController.cpp" />
+    <ClCompile Include="..\src\Renderer\RenderAPI.cpp" />
+    <ClCompile Include="..\src\Renderer\RenderCommand.cpp" />
+    <ClCompile Include="..\src\Renderer\Renderer.cpp" />
     <ClCompile Include="..\src\Renderer\Scene.cpp" />
+    <ClCompile Include="..\src\Renderer\Shader.cpp" />
+    <ClCompile Include="..\src\Renderer\Texture.cpp" />
     <ClCompile Include="..\src\Renderer\VertexArray.cpp" />
     <ClCompile Include="..\src\UI\UI.cpp" />
   </ItemGroup>
@@ -135,6 +143,9 @@
     <ClInclude Include="..\src\Event\MouseEvent.h" />
     <ClInclude Include="..\src\Paltform\OpenGL\OpenGLBuffer.h" />
     <ClInclude Include="..\src\Paltform\OpenGL\OpenGLContext.h" />
+    <ClInclude Include="..\src\Paltform\OpenGL\OpenGLRenderAPI.h" />
+    <ClInclude Include="..\src\Paltform\OpenGL\OpenGLShader.h" />
+    <ClInclude Include="..\src\Paltform\OpenGL\OpenGLTexture.h" />
     <ClInclude Include="..\src\Paltform\OpenGL\OpenGLVertexArray.h" />
     <ClInclude Include="..\src\Paltform\Windows\WindowsWindow.h" />
     <ClInclude Include="..\src\pch.h" />
@@ -142,7 +153,12 @@
     <ClInclude Include="..\src\Renderer\Camera.h" />
     <ClInclude Include="..\src\Renderer\CameraController.h" />
     <ClInclude Include="..\src\Renderer\GraphicsContext.h" />
+    <ClInclude Include="..\src\Renderer\RenderAPI.h" />
+    <ClInclude Include="..\src\Renderer\RenderCommand.h" />
+    <ClInclude Include="..\src\Renderer\Renderer.h" />
     <ClInclude Include="..\src\Renderer\Scene.h" />
+    <ClInclude Include="..\src\Renderer\Shader.h" />
+    <ClInclude Include="..\src\Renderer\Texture.h" />
     <ClInclude Include="..\src\Renderer\VertexArray.h" />
     <ClInclude Include="..\src\UI\UI.h" />
   </ItemGroup>

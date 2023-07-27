@@ -4,6 +4,9 @@ E:\Ralts\Amatsu\src\ImGUI\ImGuiBuild.cpp;E:\Ralts\Amatsu\Amatsu\temp\Debug-x64\R
 E:\Ralts\Amatsu\src\main.cpp;E:\Ralts\Amatsu\Amatsu\temp\Debug-x64\Rendering\main.obj
 E:\Ralts\Amatsu\src\Paltform\OpenGL\OpenGLBuffer.cpp;E:\Ralts\Amatsu\Amatsu\temp\Debug-x64\Rendering\OpenGLBuffer.obj
 E:\Ralts\Amatsu\src\Paltform\OpenGL\OpenGLContext.cpp;E:\Ralts\Amatsu\Amatsu\temp\Debug-x64\Rendering\OpenGLContext.obj
+E:\Ralts\Amatsu\src\Paltform\OpenGL\OpenGLRenderAPI.cpp;E:\Ralts\Amatsu\Amatsu\temp\Debug-x64\Rendering\OpenGLRenderAPI.obj
+E:\Ralts\Amatsu\src\Paltform\OpenGL\OpenGLShader.cpp;E:\Ralts\Amatsu\Amatsu\temp\Debug-x64\Rendering\OpenGLShader.obj
+E:\Ralts\Amatsu\src\Paltform\OpenGL\OpenGLTexture.cpp;E:\Ralts\Amatsu\Amatsu\temp\Debug-x64\Rendering\OpenGLTexture.obj
 E:\Ralts\Amatsu\src\Paltform\OpenGL\OpenGLVertexArray.cpp;E:\Ralts\Amatsu\Amatsu\temp\Debug-x64\Rendering\OpenGLVertexArray.obj
 E:\Ralts\Amatsu\src\Paltform\Windows\WindowsInput.cpp;E:\Ralts\Amatsu\Amatsu\temp\Debug-x64\Rendering\WindowsInput.obj
 E:\Ralts\Amatsu\src\Paltform\Windows\WindowsWindow.cpp;E:\Ralts\Amatsu\Amatsu\temp\Debug-x64\Rendering\WindowsWindow.obj
@@ -11,6 +14,11 @@ E:\Ralts\Amatsu\src\pch.cpp;E:\Ralts\Amatsu\Amatsu\temp\Debug-x64\Rendering\pch.
 E:\Ralts\Amatsu\src\Renderer\Buffer.cpp;E:\Ralts\Amatsu\Amatsu\temp\Debug-x64\Rendering\Buffer.obj
 E:\Ralts\Amatsu\src\Renderer\Camera.cpp;E:\Ralts\Amatsu\Amatsu\temp\Debug-x64\Rendering\Camera.obj
 E:\Ralts\Amatsu\src\Renderer\CameraController.cpp;E:\Ralts\Amatsu\Amatsu\temp\Debug-x64\Rendering\CameraController.obj
+E:\Ralts\Amatsu\src\Renderer\RenderAPI.cpp;E:\Ralts\Amatsu\Amatsu\temp\Debug-x64\Rendering\RenderAPI.obj
+E:\Ralts\Amatsu\src\Renderer\RenderCommand.cpp;E:\Ralts\Amatsu\Amatsu\temp\Debug-x64\Rendering\RenderCommand.obj
+E:\Ralts\Amatsu\src\Renderer\Renderer.cpp;E:\Ralts\Amatsu\Amatsu\temp\Debug-x64\Rendering\Renderer.obj
 E:\Ralts\Amatsu\src\Renderer\Scene.cpp;E:\Ralts\Amatsu\Amatsu\temp\Debug-x64\Rendering\Scene.obj
+E:\Ralts\Amatsu\src\Renderer\Shader.cpp;E:\Ralts\Amatsu\Amatsu\temp\Debug-x64\Rendering\Shader.obj
+E:\Ralts\Amatsu\src\Renderer\Texture.cpp;E:\Ralts\Amatsu\Amatsu\temp\Debug-x64\Rendering\Texture.obj
 E:\Ralts\Amatsu\src\Renderer\VertexArray.cpp;E:\Ralts\Amatsu\Amatsu\temp\Debug-x64\Rendering\VertexArray.obj
 E:\Ralts\Amatsu\src\UI\UI.cpp;E:\Ralts\Amatsu\Amatsu\temp\Debug-x64\Rendering\UI.obj
