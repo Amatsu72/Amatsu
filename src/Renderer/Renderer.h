@@ -25,4 +25,5 @@ namespace Engine {
 		};
 		static SceneData* s_scene_data;
 	};
+
 }

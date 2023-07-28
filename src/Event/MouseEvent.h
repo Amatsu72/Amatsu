@@ -21,7 +21,8 @@ namespace Engine {
 		}
 
 		EVENT_CLASS_TYPE(MouseMoved)
-			EVENT_CLASS_CATEGORY(EventCategoryMouse | EventCategoryInput)
+		EVENT_CLASS_CATEGORY(EventCategoryMouse | EventCategoryInput)
+
 	private:
 		float m_mouseX, m_mouseY;
 	};
@@ -43,7 +44,8 @@ namespace Engine {
 		}
 
 		EVENT_CLASS_TYPE(MouseScrolled)
-			EVENT_CLASS_CATEGORY(EventCategoryMouse | EventCategoryInput)
+		EVENT_CLASS_CATEGORY(EventCategoryMouse | EventCategoryInput)
+
 	private:
 		float m_Xoffset, m_Yoffset;
 	};
@@ -54,6 +56,7 @@ namespace Engine {
 		inline MouseButton get_mouse_button() const { return m_button; }
 
 		EVENT_CLASS_CATEGORY(EventCategoryMouse | EventCategoryInput)
+
 	protected:
 		MouseButtonEvent(MouseButton button)
 			: m_button(button) {}

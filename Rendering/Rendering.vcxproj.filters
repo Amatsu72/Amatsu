@@ -25,6 +25,15 @@
     <Filter Include="UI">
       <UniqueIdentifier>{24287eab-24c6-43a1-98f1-e10f1747d642}</UniqueIdentifier>
     </Filter>
+    <Filter Include="assets">
+      <UniqueIdentifier>{186edda4-9ea6-405e-88e2-c470e9e159a1}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="assets\shaders">
+      <UniqueIdentifier>{7536f7b7-37e2-4d32-a063-3ad0f0362097}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="assets\textures">
+      <UniqueIdentifier>{e0ee27ef-410f-4ada-81b7-de8482c7d6bd}</UniqueIdentifier>
+    </Filter>
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="..\3rdparty\stb_image\stb_image.cpp">
@@ -189,5 +198,21 @@
     <ClInclude Include="..\src\Paltform\OpenGL\OpenGLTexture.h">
       <Filter>Platform\OpenGL</Filter>
     </ClInclude>
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="..\assets\shaders\ColorShader.glsl">
+      <Filter>assets\shaders</Filter>
+    </None>
+    <None Include="..\assets\shaders\Texture.glsl">
+      <Filter>assets\shaders</Filter>
+    </None>
+  </ItemGroup>
+  <ItemGroup>
+    <Image Include="..\assets\textures\Checkerboard.png">
+      <Filter>assets\textures</Filter>
+    </Image>
+    <Image Include="..\assets\textures\ChernoLogo.png">
+      <Filter>assets\textures</Filter>
+    </Image>
   </ItemGroup>
 </Project>

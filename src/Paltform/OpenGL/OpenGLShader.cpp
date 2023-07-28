@@ -1,7 +1,7 @@
 #include "../../pch.h"
 #include "OpenGLShader.h"
-
 #include <fstream>
+#include <glad/glad.h>
 #include <gtc/type_ptr.hpp>
 
 namespace Engine {
@@ -28,6 +28,7 @@ namespace Engine {
 		auto count = last_dot == std::string::npos ? filepath.size() - last_slash : last_dot - last_slash;
 		m_name = filepath.substr(last_slash, count);
 	}
+
 	OpenGLShader::OpenGLShader(const std::string& name, const std::string& vertex_src, const std::string& fragment_src)
 		:m_name(name)
 	{
@@ -36,38 +37,46 @@ namespace Engine {
 		sources[GL_FRAGMENT_SHADER] = fragment_src;
 		compile(sources);
 	}
+
 	OpenGLShader::~OpenGLShader()
 	{
 		glDeleteProgram(m_render_id);
 	}
+
 	void OpenGLShader::bind() const
 	{
 		glUseProgram(m_render_id);
 	}
+
 	void OpenGLShader::unbind() const
 	{
 		glUseProgram(0);
 	}
+
 	void OpenGLShader::set_int(const std::string& name, int value)
 	{
 		GLint location = glGetUniformLocation(m_render_id, name.c_str());
 		glUniform1i(location, value);
 	}
+
 	void OpenGLShader::set_float(const std::string& name, float value)
 	{
 		GLint location = glGetUniformLocation(m_render_id, name.c_str());
 		glUniform1f(location, value);
 	}
+
 	void OpenGLShader::set_float3(const std::string& name, const glm::vec3& value)
 	{
 		GLint location = glGetUniformLocation(m_render_id, name.c_str());
 		glUniform3f(location, value.x, value.y, value.z);
 	}
+
 	void OpenGLShader::set_float4(const std::string& name, const glm::vec4& value)
 	{
 		GLint location = glGetUniformLocation(m_render_id, name.c_str());
 		glUniform4f(location, value.x, value.y, value.z, value.w);
 	}
+
 	void OpenGLShader::set_mat4(const std::string& name, const glm::mat4& value)
 	{
 		GLint location = glGetUniformLocation(m_render_id, name.c_str());
@@ -103,8 +112,8 @@ namespace Engine {
 			std::cout << "could not open file:" << filepath << std::endl;
 		}
 		return result;
-		
 	}
+
 	std::unordered_map<GLenum, std::string> OpenGLShader::pre_process(const std::string& source)
 	{
 		std::unordered_map<GLenum, std::string> shader_sources;
@@ -133,6 +142,7 @@ namespace Engine {
 		}
 		return shader_sources;
 	}
+
 	void OpenGLShader::compile(const std::unordered_map<GLenum, std::string>& shader_source)
 	{
 		GLuint program = glCreateProgram();
@@ -196,4 +206,5 @@ namespace Engine {
 
 		m_render_id = program;
 	}
+
 }

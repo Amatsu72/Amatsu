@@ -2,6 +2,7 @@
 #include "OpenGLContext.h"
 
 namespace Engine {
+
 	OpenGLContext::OpenGLContext(GLFWwindow* window_handle)
 		:m_window_handle(window_handle) {}
 
@@ -17,4 +18,5 @@ namespace Engine {
 	{
 		glfwSwapBuffers(m_window_handle);
 	}
+
 }

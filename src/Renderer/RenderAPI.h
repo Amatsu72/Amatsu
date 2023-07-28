@@ -24,4 +24,5 @@ namespace Engine {
 
 		static API s_API;
 	};
+
 }

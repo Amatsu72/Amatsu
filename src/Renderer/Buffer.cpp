@@ -24,6 +24,9 @@ namespace Engine {
 		std::cout << "Unknown ShaderDataType!" << std::endl;
 		return 0;
 	}
+	
+	////////////////////////////////////////////////////////////////////////////////////////////////
+	
 	BufferElement::BufferElement(ShaderDataType type, const std::string& name, bool normalized)
 		:name(name), type(type), size(shader_data_type_size(type)), offset(0), normalized(normalized) {}
 
@@ -47,6 +50,8 @@ namespace Engine {
 		return 0;
 	}
 
+	/////////////////////////////////////////////////////////////////////////////////////////////////////
+
 	BufferLayout::BufferLayout(const std::initializer_list<BufferElement>& elements)
 		:m_elements(elements)
 	{
@@ -64,6 +69,8 @@ namespace Engine {
 			m_stride += element.size;
 		}
 	}
+
+	/////////////////////////////////////////////////////////////////////////////////////////////////////// 
 
 	std::shared_ptr<VertexBuffer> VertexBuffer::create(float* vertices, uint32_t size)
 	{
@@ -90,6 +97,8 @@ namespace Engine {
 		}
 		return nullptr;
 	}
+
+	/////////////////////////////////////////////////////////////////////////////////////////////////////// 
 
 	std::shared_ptr<IndexBuffer> IndexBuffer::create(uint32_t* indices, uint32_t count)
 	{

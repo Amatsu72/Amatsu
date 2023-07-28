@@ -51,6 +51,7 @@ namespace Engine {
 		m_data.Width = props.Width;
 
 		std::cout << "window create:" << props.Title << "\t" << props.Height << "," << props.Width << std::endl;
+
 		if (s_GLFWWindowCount == 0)
 		{
 			int success = glfwInit();
@@ -118,18 +119,18 @@ namespace Engine {
 				WindowData& data = *(WindowData*)glfwGetWindowUserPointer(window);
 				switch (action)
 				{
-				case GLFW_PRESS:
-				{
-					MouseButtonPressedEvent event((MouseButton)button);
-					data.EventCallback(event);
-					break;
-				}
-				case GLFW_RELEASE:
-				{
-					MouseButtonReleasedEvent event((MouseButton)button);
-					data.EventCallback(event);
-					break;
-				}
+					case GLFW_PRESS:
+					{
+						MouseButtonPressedEvent event((MouseButton)button);
+						data.EventCallback(event);
+						break;
+					}
+					case GLFW_RELEASE:
+					{
+						MouseButtonReleasedEvent event((MouseButton)button);
+						data.EventCallback(event);
+						break;
+					}
 				}
 			});
 		glfwSetScrollCallback(m_window, [](GLFWwindow* window, double xOffset, double yOffset)
@@ -155,6 +156,5 @@ namespace Engine {
 			glfwTerminate();
 		}
 	}
-
 
 }

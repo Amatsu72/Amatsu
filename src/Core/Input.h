@@ -15,6 +15,6 @@ namespace Engine {
 		static float get_mouseX();
 		static float get_mouseY();
 		static std::pair<float, float> get_mouse_position();
-	
 	};
+
 }

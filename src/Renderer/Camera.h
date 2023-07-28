@@ -43,7 +43,8 @@ namespace Engine {
 		glm::vec3 m_up;
 		glm::vec3 m_world_up = { 0.0f, 1.0f, 0.0f };
 
-		float m_yaw = -90.0;
+		float m_yaw = -90.0f;
 		float m_pitch = 0.0f;
 	};
+
 }

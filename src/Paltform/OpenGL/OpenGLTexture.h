@@ -16,10 +16,12 @@ namespace Engine {
 
 		void set_data(void* data, uint32_t size) override;
 		void bind(uint32_t slot = 0) const override;
+
 	private:
 		std::string m_path;
 		uint32_t m_width, m_height;
 		uint32_t m_render_id;
 		GLenum m_internal_format, m_data_format;		
 	};
+
 }

@@ -13,10 +13,6 @@
 
 namespace Engine {
 
-	UI::UI()
-	{
-	}
-
 	UI::~UI()
 	{
 		ImGui_ImplOpenGL3_Shutdown();

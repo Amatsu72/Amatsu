@@ -25,12 +25,14 @@ namespace Engine {
 		bool is_VSync()const override;
 
 		inline virtual void* get_native_window() const override { return m_window; }
+
 	private:
 		void init(const WindowProps& props);
 		void shutdown();
 
 		GLFWwindow* m_window;
 		GraphicsContext* m_context;
+
 		struct WindowData
 		{
 			std::string Title;
@@ -40,4 +42,5 @@ namespace Engine {
 		};
 		WindowData m_data;
 	};
+
 }

@@ -13,8 +13,9 @@ namespace Engine {
 		s_instance = this;
 		m_window = std::unique_ptr<Window>(Window::create());
 		m_window->set_event_callback(BIND_EVENT_FN(Application::on_event));
-		
+			
 		Renderer::init();
+		m_scene = std::make_unique<Scene>();
 		m_ui = std::make_unique<UI>();
 		m_ui->init();
 	}
@@ -32,10 +33,9 @@ namespace Engine {
 			m_lastFrameTime = time;
 			if (!m_minimized)
 			{
-				m_scene.on_update(timesetp);
-
+				m_scene->on_update(timesetp);
 				m_ui->begin();
-				m_scene.ui_render();
+				m_scene->ui_render();
 				m_ui->end();
 			}
 			m_window->on_update();
@@ -47,8 +47,7 @@ namespace Engine {
 		EventDispatcher dispatcher(event);
 		dispatcher.dispatch<WindowCloseEvent>(BIND_EVENT_FN(Application::on_window_close));
 		dispatcher.dispatch<WindowResizeEvent>(BIND_EVENT_FN(Application::on_window_resize));
-		//ME_CORE_TRACE("{0}",event);
-		m_scene.on_event(event);
+		m_scene->on_event(event);
 	}
 
 

@@ -28,18 +28,22 @@ namespace Engine {
 	{
 		glCreateVertexArrays(1, &m_render_id);
 	}
+
 	OpenGLVertexArray::~OpenGLVertexArray()
 	{
 		glDeleteVertexArrays(1, &m_render_id);
 	}
+
 	void OpenGLVertexArray::bind() const
 	{
 		glBindVertexArray(m_render_id);
 	}
+
 	void OpenGLVertexArray::unbind() const
 	{
 		glBindVertexArray(0);
 	}
+
 	void OpenGLVertexArray::add_vertex_buffer(std::shared_ptr<VertexBuffer>& vertex_buffer)
 	{
 		if (vertex_buffer->get_layout().get_elements().size() == 0)
@@ -61,6 +65,7 @@ namespace Engine {
 		}
 		m_vertex_buffers.push_back(vertex_buffer);
 	}
+
 	void OpenGLVertexArray::set_index_buffer(std::shared_ptr<IndexBuffer>& index_buffer)
 	{
 		glBindVertexArray(m_render_id);

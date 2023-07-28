@@ -21,7 +21,6 @@ namespace Engine {
 		uint32_t get_component_count() const;
 	};
 
-
 	class BufferLayout
 	{
 	public:
@@ -35,6 +34,7 @@ namespace Engine {
 		std::vector<BufferElement>::iterator end() { return m_elements.end(); }
 		std::vector<BufferElement>::const_iterator begin() const { return m_elements.begin(); }
 		std::vector<BufferElement>::const_iterator end() const { return m_elements.end(); }
+
 	private:
 		void calculate_offset_and_stride();
 		
@@ -70,6 +70,6 @@ namespace Engine {
 		virtual uint32_t get_count() const = 0;
 
 		static std::shared_ptr<IndexBuffer> create(uint32_t* indices, uint32_t count);
-
 	};
+
 }

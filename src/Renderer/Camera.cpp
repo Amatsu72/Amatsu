@@ -3,31 +3,40 @@
 
 namespace Engine{
 
-	Camera::Camera() :m_projection_matrix(1.0f), m_view_matrix(1.0f)
+	Camera::Camera() :m_projection_matrix(1.0f)
 	{
-		m_view_projection_matrix = m_projection_matrix * m_view_matrix;
 		update_camera_vectors();
+		recaculate();
 	}
+
 	void Camera::set_position(const glm::vec3& position)
 	{
 		m_position = position;
 		recaculate();
+		//std::cout << "camera position:";
+		//std::cout << m_position.x <<"\t"<< m_position.y << "\t" << m_position.z << "\t" << std::endl;
 	}
+
 	void Camera::set_projection(const glm::mat4& projection_matrix)
 	{
 		m_projection_matrix = projection_matrix;
 		m_view_projection_matrix = m_projection_matrix * m_view_matrix;
 	}
+
 	void Camera::set_yaw(float yaw)
 	{
 		m_yaw = yaw;
 		update_camera_vectors();
+		recaculate();
 	}
+
 	void Camera::set_pitch(float pitch)
 	{
 		m_pitch = pitch;
 		update_camera_vectors();
+		recaculate();
 	}
+
 	void Camera::recaculate()
 	{
 		m_view_matrix = glm::lookAt(m_position, m_position + m_front, m_up);

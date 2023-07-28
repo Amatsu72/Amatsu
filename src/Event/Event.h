@@ -16,11 +16,11 @@ namespace Engine {
 	enum EventCategory
 	{
 		None = 0,
-		EventCategoryApplication = BIT(0),
-		EventCategoryInput = BIT(1),
-		EventCategoryKeyboard = BIT(2),
-		EventCategoryMouse = BIT(3),
-		EventCategoryMouseButton = BIT(4)
+		EventCategoryApplication	= BIT(0),
+		EventCategoryInput			= BIT(1),
+		EventCategoryKeyboard		= BIT(2),
+		EventCategoryMouse			= BIT(3),
+		EventCategoryMouseButton	= BIT(4)
 	};
 
 #define EVENT_CLASS_TYPE(type) static EventType get_static_type() { return EventType::##type; }\
@@ -44,13 +44,13 @@ namespace Engine {
 		{
 			return get_category_flags() & category;
 		}
-
 	};
 
 	class EventDispatcher
 	{
 		template<typename T>
 		using EventFn = std::function<bool(T&)>;
+
 	public:
 		EventDispatcher(Event& event)
 			: m_event(event){}
@@ -65,6 +65,7 @@ namespace Engine {
 			}
 			return false;
 		}
+
 	private:
 		Event& m_event;
 	};
@@ -73,4 +74,5 @@ namespace Engine {
 	{
 		return os << e.to_string();
 	}
+
 }

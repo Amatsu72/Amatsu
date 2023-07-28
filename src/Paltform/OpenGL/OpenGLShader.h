@@ -1,6 +1,7 @@
 #pragma once
 #include "../../Renderer/Shader.h"
-#include <glad/glad.h>
+
+typedef unsigned int GLenum;
 
 namespace Engine {
 
@@ -31,6 +32,6 @@ namespace Engine {
 
 		uint32_t m_render_id;
 		std::string m_name;
-		
 	};
+
 }

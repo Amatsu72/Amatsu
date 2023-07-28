@@ -4,10 +4,13 @@
 namespace Engine {
 
 	struct WindowProps {
-		std::string Title = "Amatsu";
-		unsigned int Width = 1280;
-		unsigned int Height = 720;
-		bool VSync = true;
+		std::string Title;
+		unsigned int Width;
+		unsigned int Height;
+		bool VSync;
+
+		WindowProps(const std::string& title = "Amatsu", unsigned int width = 1280, unsigned int height = 720, bool vsync = true)
+			:Title(title), Width(width), Height(height), VSync(vsync) {}
 	};
 
 	class Window

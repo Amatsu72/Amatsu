@@ -19,6 +19,7 @@ namespace Engine {
 		glTextureParameteri(m_render_id, GL_TEXTURE_WRAP_S, GL_REPEAT);
 		glTextureParameteri(m_render_id, GL_TEXTURE_WRAP_T, GL_REPEAT);
 	}
+
 	OpenGLTexture2D::OpenGLTexture2D(const std::string& path)
 		:m_path(path)
 	{
@@ -57,13 +58,14 @@ namespace Engine {
 
 		glTextureSubImage2D(m_render_id, 0, 0, 0, m_width, m_height, data_format, GL_UNSIGNED_BYTE, data);
 		
-		stbi_image_free(data);
-		
+		stbi_image_free(data);	
 	}
+
 	OpenGLTexture2D::~OpenGLTexture2D()
 	{
 		glDeleteTextures(1, &m_render_id);
 	}
+
 	void OpenGLTexture2D::set_data(void* data, uint32_t size)
 	{
 		uint32_t bpp = m_data_format == GL_RGBA ? 4 : 3;
@@ -72,8 +74,10 @@ namespace Engine {
 		
 		glTextureSubImage2D(m_render_id, 0, 0, 0, m_width, m_height, m_data_format, GL_UNSIGNED_BYTE, data);
 	}
+
 	void OpenGLTexture2D::bind(uint32_t slot) const
 	{
 		glBindTextureUnit(slot, m_render_id);
 	}
+
 }

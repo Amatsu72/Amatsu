@@ -17,6 +17,7 @@ namespace Engine {
 
 		const BufferLayout& get_layout() const override { return m_layout; }
 		void set_layout(const BufferLayout& layout) override { m_layout = layout; }
+
 	private:
 		uint32_t m_render_id;
 		BufferLayout m_layout;
@@ -26,14 +27,16 @@ namespace Engine {
 	{
 	public:
 		OpenGLIndexBuffer(uint32_t* indices, uint32_t count);
-		virtual ~OpenGLIndexBuffer();
+		~OpenGLIndexBuffer() override;
 
 		void bind() const override;
 		void unbind() const override;
 
 		uint32_t get_count() const override { return m_count; }
+
 	private:
 		uint32_t m_render_id;
 		uint32_t m_count;
 	};
+
 }
