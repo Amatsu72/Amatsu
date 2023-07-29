@@ -1,0 +1,13 @@
+E:/Ralts/Amatsu/3rdparty/assimp/build/CMakeFiles/uninstall.dir
+E:/Ralts/Amatsu/3rdparty/assimp/build/CMakeFiles/UpdateAssimpLibsDebugSymbolsAndDLLs.dir
+E:/Ralts/Amatsu/3rdparty/assimp/build/CMakeFiles/INSTALL.dir
+E:/Ralts/Amatsu/3rdparty/assimp/build/CMakeFiles/ALL_BUILD.dir
+E:/Ralts/Amatsu/3rdparty/assimp/build/CMakeFiles/ZERO_CHECK.dir
+E:/Ralts/Amatsu/3rdparty/assimp/build/contrib/zlib/CMakeFiles/zlibstatic.dir
+E:/Ralts/Amatsu/3rdparty/assimp/build/contrib/zlib/CMakeFiles/INSTALL.dir
+E:/Ralts/Amatsu/3rdparty/assimp/build/contrib/zlib/CMakeFiles/ALL_BUILD.dir
+E:/Ralts/Amatsu/3rdparty/assimp/build/code/CMakeFiles/assimp.dir
+E:/Ralts/Amatsu/3rdparty/assimp/build/code/CMakeFiles/INSTALL.dir
+E:/Ralts/Amatsu/3rdparty/assimp/build/test/CMakeFiles/unit.dir
+E:/Ralts/Amatsu/3rdparty/assimp/build/test/CMakeFiles/INSTALL.dir
+E:/Ralts/Amatsu/3rdparty/assimp/build/test/headercheck/CMakeFiles/INSTALL.dir

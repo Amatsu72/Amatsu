@@ -4,11 +4,12 @@
 
 namespace Engine {
 
-	OpenGLTexture2D::OpenGLTexture2D(uint32_t width, uint32_t height)
+	OpenGLTexture2D::OpenGLTexture2D(uint32_t width, uint32_t height, void* data)
 		:m_width(width), m_height(height)
 	{
 		m_internal_format = GL_RGBA8;
 		m_data_format = GL_RGBA;
+		int channels = 4;
 
 		glCreateTextures(GL_TEXTURE_2D, 1, &m_render_id);
 		glTextureStorage2D(m_render_id, 1, m_render_id, m_width, m_height);
@@ -18,6 +19,13 @@ namespace Engine {
 
 		glTextureParameteri(m_render_id, GL_TEXTURE_WRAP_S, GL_REPEAT);
 		glTextureParameteri(m_render_id, GL_TEXTURE_WRAP_T, GL_REPEAT);
+
+		if (data)
+		{
+			uint32_t size = m_width * m_height * channels;
+			set_data(data, size);
+		}
+
 	}
 
 	OpenGLTexture2D::OpenGLTexture2D(const std::string& path)

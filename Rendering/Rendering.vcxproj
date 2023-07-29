@@ -52,13 +52,13 @@
       <PreprocessorDefinitions>_DEBUG;_CONSOLE;%(PreprocessorDefinitions)</PreprocessorDefinitions>
       <ConformanceMode>true</ConformanceMode>
       <LanguageStandard>stdcpp17</LanguageStandard>
-      <AdditionalIncludeDirectories>E:\Ralts\Amatsu\3rdparty\GLFW\include;E:\Ralts\Amatsu\3rdparty\glad\include;E:\Ralts\Amatsu\3rdparty\imGui;E:\Ralts\Amatsu\3rdparty\stb_image;E:\Ralts\Amatsu\3rdparty\glm</AdditionalIncludeDirectories>
+      <AdditionalIncludeDirectories>E:\Ralts\Amatsu\3rdparty\GLFW\include;E:\Ralts\Amatsu\3rdparty\glad\include;E:\Ralts\Amatsu\3rdparty\imGui;E:\Ralts\Amatsu\3rdparty\stb_image;E:\Ralts\Amatsu\3rdparty\glm;E:\Ralts\Amatsu\3rdparty\assimp\include</AdditionalIncludeDirectories>
     </ClCompile>
     <Link>
       <SubSystem>Console</SubSystem>
       <GenerateDebugInformation>true</GenerateDebugInformation>
-      <AdditionalDependencies>glfw3.lib;glad.lib;imGui.lib;%(AdditionalDependencies)</AdditionalDependencies>
-      <AdditionalLibraryDirectories>E:\Ralts\Amatsu\Amatsu\bin\Debug-x64\glfw;E:\Ralts\Amatsu\Amatsu\bin\Debug-x64\glad;E:\Ralts\Amatsu\Amatsu\bin\Debug-x64\imGui</AdditionalLibraryDirectories>
+      <AdditionalDependencies>glfw3.lib;glad.lib;imGui.lib;assimp.lib;%(AdditionalDependencies)</AdditionalDependencies>
+      <AdditionalLibraryDirectories>E:\Ralts\Amatsu\Amatsu\bin\Debug-x64\glfw;E:\Ralts\Amatsu\Amatsu\bin\Debug-x64\glad;E:\Ralts\Amatsu\Amatsu\bin\Debug-x64\imGui;E:\Ralts\Amatsu\Amatsu\bin\Debug-x64\assimp</AdditionalLibraryDirectories>
     </Link>
   </ItemDefinitionGroup>
   <ItemDefinitionGroup Condition="'$(Configuration)|$(Platform)'=='Release|x64'">
@@ -70,15 +70,15 @@
       <PreprocessorDefinitions>NDEBUG;_CONSOLE;%(PreprocessorDefinitions)</PreprocessorDefinitions>
       <ConformanceMode>true</ConformanceMode>
       <LanguageStandard>stdcpp17</LanguageStandard>
-      <AdditionalIncludeDirectories>E:\Ralts\Amatsu\3rdparty\GLFW\include;E:\Ralts\Amatsu\3rdparty\glad\include;E:\Ralts\Amatsu\3rdparty\imGui;E:\Ralts\Amatsu\3rdparty\stb_image;E:\Ralts\Amatsu\3rdparty\glm</AdditionalIncludeDirectories>
+      <AdditionalIncludeDirectories>E:\Ralts\Amatsu\3rdparty\GLFW\include;E:\Ralts\Amatsu\3rdparty\glad\include;E:\Ralts\Amatsu\3rdparty\imGui;E:\Ralts\Amatsu\3rdparty\stb_image;E:\Ralts\Amatsu\3rdparty\glm;E:\Ralts\Amatsu\3rdparty\assimp\include</AdditionalIncludeDirectories>
     </ClCompile>
     <Link>
       <SubSystem>Console</SubSystem>
       <EnableCOMDATFolding>true</EnableCOMDATFolding>
       <OptimizeReferences>true</OptimizeReferences>
       <GenerateDebugInformation>true</GenerateDebugInformation>
-      <AdditionalDependencies>glfw3.lib;glad.lib;imGui.lib;%(AdditionalDependencies)</AdditionalDependencies>
-      <AdditionalLibraryDirectories>E:\Ralts\Amatsu\Amatsu\bin\Debug-x64\glfw;E:\Ralts\Amatsu\Amatsu\bin\Debug-x64\glad;E:\Ralts\Amatsu\Amatsu\bin\Debug-x64\imGui</AdditionalLibraryDirectories>
+      <AdditionalDependencies>glfw3.lib;glad.lib;imGui.lib;assimp.lib;%(AdditionalDependencies)</AdditionalDependencies>
+      <AdditionalLibraryDirectories>E:\Ralts\Amatsu\Amatsu\bin\Release-x64\glfw;E:\Ralts\Amatsu\Amatsu\bin\Release-x64\glad;E:\Ralts\Amatsu\Amatsu\bin\Release-x64\imGui;E:\Ralts\Amatsu\Amatsu\bin\Release-x64\assimp</AdditionalLibraryDirectories>
     </Link>
   </ItemDefinitionGroup>
   <ItemGroup>
@@ -108,6 +108,10 @@
     <ClCompile Include="..\src\Renderer\Buffer.cpp" />
     <ClCompile Include="..\src\Renderer\Camera.cpp" />
     <ClCompile Include="..\src\Renderer\CameraController.cpp" />
+    <ClCompile Include="..\src\Renderer\Light.cpp" />
+    <ClCompile Include="..\src\Renderer\Material.cpp" />
+    <ClCompile Include="..\src\Renderer\Mesh.cpp" />
+    <ClCompile Include="..\src\Renderer\Model.cpp" />
     <ClCompile Include="..\src\Renderer\RenderAPI.cpp" />
     <ClCompile Include="..\src\Renderer\RenderCommand.cpp" />
     <ClCompile Include="..\src\Renderer\Renderer.cpp" />
@@ -118,6 +122,9 @@
     <ClCompile Include="..\src\UI\UI.cpp" />
   </ItemGroup>
   <ItemGroup>
+    <ProjectReference Include="..\3rdparty\assimp\build\code\assimp.vcxproj">
+      <Project>{382113aa-3819-30f5-a5fb-d95f769e4b77}</Project>
+    </ProjectReference>
     <ProjectReference Include="..\3rdparty\glad\glad.vcxproj">
       <Project>{0ca7cc32-18f9-464b-8abd-a58a2be82dde}</Project>
     </ProjectReference>
@@ -153,6 +160,10 @@
     <ClInclude Include="..\src\Renderer\Camera.h" />
     <ClInclude Include="..\src\Renderer\CameraController.h" />
     <ClInclude Include="..\src\Renderer\GraphicsContext.h" />
+    <ClInclude Include="..\src\Renderer\Light.h" />
+    <ClInclude Include="..\src\Renderer\Material.h" />
+    <ClInclude Include="..\src\Renderer\Mesh.h" />
+    <ClInclude Include="..\src\Renderer\Model.h" />
     <ClInclude Include="..\src\Renderer\RenderAPI.h" />
     <ClInclude Include="..\src\Renderer\RenderCommand.h" />
     <ClInclude Include="..\src\Renderer\Renderer.h" />

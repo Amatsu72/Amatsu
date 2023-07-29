@@ -7,7 +7,7 @@ namespace Engine {
 	class OpenGLTexture2D :public Texture2D
 	{
 	public:
-		OpenGLTexture2D(uint32_t width, uint32_t height);
+		OpenGLTexture2D(uint32_t width, uint32_t height, void* data = nullptr);
 		OpenGLTexture2D(const std::string& path);
 		~OpenGLTexture2D() override;
 

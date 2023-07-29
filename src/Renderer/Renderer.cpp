@@ -28,8 +28,8 @@ namespace Engine {
 	void Renderer::submit(const std::shared_ptr<Shader>& shader, const std::shared_ptr<VertexArray>& vertex_array, const glm::mat4& transform)
 	{
 		shader->bind();
-		std::dynamic_pointer_cast<OpenGLShader>(shader)->set_mat4("u_viewProjection", s_scene_data->view_projection_matrix);
-		std::dynamic_pointer_cast<OpenGLShader>(shader)->set_mat4("u_transform", transform);
+		std::dynamic_pointer_cast<OpenGLShader>(shader)->set_mat4("u_ViewProjection", s_scene_data->view_projection_matrix);
+		std::dynamic_pointer_cast<OpenGLShader>(shader)->set_mat4("u_Transform", transform);
 		vertex_array->bind();
 		RenderCommand::draw_indexed(vertex_array);
 	}

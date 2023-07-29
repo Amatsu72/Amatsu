@@ -2,6 +2,12 @@
 <Project>
   <ProjectOutputs>
     <ProjectOutput>
+      <FullPath>E:\Ralts\Amatsu\3rdparty\assimp\build\x64\Debug\ZERO_CHECK</FullPath>
+    </ProjectOutput>
+    <ProjectOutput>
+      <FullPath>E:\Ralts\Amatsu\Amatsu\bin\Release-x64\assimp\assimp-vc142-mt.dll</FullPath>
+    </ProjectOutput>
+    <ProjectOutput>
       <FullPath>E:\Ralts\MiniEngine\3rdparty\GLFW\build\x64\Debug\ZERO_CHECK</FullPath>
     </ProjectOutput>
     <ProjectOutput>

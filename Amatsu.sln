@@ -11,6 +11,8 @@ Project("{8BC9CEB8-8B4A-11D0-8D11-00A0C91BC942}") = "glad", "3rdparty\glad\glad.
 EndProject
 Project("{8BC9CEB8-8B4A-11D0-8D11-00A0C91BC942}") = "imGui", "3rdparty\imGui\imGui.vcxproj", "{3342DCFE-5BC1-4E57-B139-60898E9D3172}"
 EndProject
+Project("{8BC9CEB8-8B4A-11D0-8D11-00A0C91BC942}") = "assimp", "3rdparty\assimp\build\code\assimp.vcxproj", "{382113AA-3819-30F5-A5FB-D95F769E4B77}"
+EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
 		Debug|x64 = Debug|x64
@@ -33,6 +35,10 @@ Global
 		{3342DCFE-5BC1-4E57-B139-60898E9D3172}.Debug|x64.Build.0 = Debug|x64
 		{3342DCFE-5BC1-4E57-B139-60898E9D3172}.Release|x64.ActiveCfg = Release|x64
 		{3342DCFE-5BC1-4E57-B139-60898E9D3172}.Release|x64.Build.0 = Release|x64
+		{382113AA-3819-30F5-A5FB-D95F769E4B77}.Debug|x64.ActiveCfg = Debug|x64
+		{382113AA-3819-30F5-A5FB-D95F769E4B77}.Debug|x64.Build.0 = Debug|x64
+		{382113AA-3819-30F5-A5FB-D95F769E4B77}.Release|x64.ActiveCfg = Release|x64
+		{382113AA-3819-30F5-A5FB-D95F769E4B77}.Release|x64.Build.0 = Release|x64
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE
