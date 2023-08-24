@@ -2,6 +2,7 @@
 #include "RenderCommand.h"
 #include "Camera.h"
 #include "Shader.h"
+#include "Model.h"
 
 namespace Engine {
 
@@ -17,6 +18,10 @@ namespace Engine {
 		static void submit(const std::shared_ptr<Shader>& shader, 
 			const std::shared_ptr<VertexArray>& vertex_array, 
 			const glm::mat4& transform = glm::mat4(1.0f));
+
+		static void submit(const Mesh& mesh, const std::shared_ptr<Shader>& shader, const glm::mat4& transform = glm::mat4(1.0f));
+		static void submit(const Model& model, const std::shared_ptr<Shader>& shader, const glm::mat4& transform = glm::mat4(1.0f));
+
 		inline static RenderAPI::API get_API() { return RenderAPI::get_API(); }
 
 	private:

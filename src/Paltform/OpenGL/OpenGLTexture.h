@@ -19,7 +19,7 @@ namespace Engine {
 
 	private:
 		std::string m_path;
-		uint32_t m_width, m_height;
+		uint32_t m_width, m_height, m_channels;
 		uint32_t m_render_id;
 		GLenum m_internal_format, m_data_format;		
 	};

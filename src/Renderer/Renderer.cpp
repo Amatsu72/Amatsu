@@ -33,5 +33,20 @@ namespace Engine {
 		vertex_array->bind();
 		RenderCommand::draw_indexed(vertex_array);
 	}
+	
+	void Renderer::submit(const Mesh& mesh, const std::shared_ptr<Shader>& shader, const glm::mat4& transform)
+	{
+		mesh.get_material()->use();
+		mesh.get_material()->bind(shader);
+		submit(shader, mesh.get_vertex_array(), transform);
+	}
+	
+	void Renderer::submit(const Model& model, const std::shared_ptr<Shader>& shader, const glm::mat4& transform)
+	{
+		for (const Mesh& mesh : model.get_meshes())
+		{
+			submit(mesh, shader, transform);
+		}
+	}
 
 }

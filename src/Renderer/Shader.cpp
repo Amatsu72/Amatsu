@@ -5,6 +5,8 @@
 
 namespace Engine {
 
+	ShaderLibrary* ShaderLibrary::s_instance = new ShaderLibrary();
+
 	std::shared_ptr<Shader> Shader::create(const std::string& filepath)
 	{
 		switch (Renderer::get_API())
@@ -52,21 +54,21 @@ namespace Engine {
 		add(name, shader);
 	}
 
-	std::shared_ptr<Shader> ShaderLibrary::load(const std::string& filepath)
+	std::shared_ptr<Shader> ShaderLibrary::load_impl(const std::string& filepath)
 	{
 		auto shader = Shader::create(filepath);
 		add(shader);
 		return shader;
 	}
 
-	std::shared_ptr<Shader> ShaderLibrary::load(const std::string& name, const std::string& filepath)
+	std::shared_ptr<Shader> ShaderLibrary::load_impl(const std::string& name, const std::string& filepath)
 	{
 		auto shader = Shader::create(filepath);
 		add(name, shader);
 		return shader;
 	}
 
-	std::shared_ptr<Shader> ShaderLibrary::get(const std::string& name)
+	std::shared_ptr<Shader> ShaderLibrary::get_impl(const std::string& name)
 	{
 		if (!exists(name))
 		{

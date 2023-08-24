@@ -13,12 +13,26 @@ namespace Engine {
         m_specular_map = specular_map ? specular_map : black_texture;
         
     }
+    void Material::set_texture_map(std::shared_ptr<Texture2D> texture, Texture::Type type)
+    {
+        switch (type)
+        {
+            case Texture::Type::Diffuse:
+                set_diffuse_map(texture);
+                break;
+            case Texture::Type::Specular:
+                set_specular_map(texture);
+                break;
+            default: 
+                std::cout << "unkonwn texture type!" << std::endl;
+        }
+    }
     void Material::use()
     {
         m_diffuse_map->bind(s_diffuse_slot);
         m_specular_map->bind(s_specular_slot);
     }
-    void Material::bind(std::shared_ptr<Shader>& shader)
+    void Material::bind(const std::shared_ptr<Shader>& shader)
     {
         shader->bind();
         std::dynamic_pointer_cast<OpenGLShader>(shader)->set_int("u_Material.diffuse", s_diffuse_slot);

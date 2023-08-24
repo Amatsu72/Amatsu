@@ -12,6 +12,8 @@ namespace Engine {
 			float shininess = 32.0f);
 		~Material(){}
 
+		void set_texture_map(std::shared_ptr<Texture2D> texture, Texture::Type type);
+
 		inline void set_diffuse_map(std::shared_ptr<Texture2D> texture)
 		{
 			m_diffuse_map = texture;
@@ -25,7 +27,7 @@ namespace Engine {
 		inline float get_shininess() const { return m_shininess; }
 
 		void use();
-		void bind(std::shared_ptr<Shader>& shader);
+		void bind(const std::shared_ptr<Shader>& shader);
 
 	private:
 		static const int s_diffuse_slot = 0;

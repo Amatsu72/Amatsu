@@ -24,17 +24,33 @@ namespace Engine {
 
 	class ShaderLibrary
 	{
-	public:
+	public:	
+		static std::shared_ptr<Shader> load(const std::string& filepath)
+		{
+			return s_instance->load_impl(filepath);
+		}
+		static std::shared_ptr<Shader> load(const std::string& name, const std::string& filepath)
+		{
+			return s_instance->load_impl(name, filepath);
+		}
+		static std::shared_ptr<Shader> get(const std::string& name)
+		{
+			return s_instance->get_impl(name);
+		}
+
+	private:
 		void add(const std::string& name, const std::shared_ptr<Shader>& shader);
 		void add(const std::shared_ptr<Shader>& shader);
 
-		std::shared_ptr<Shader> load(const std::string& filepath);
-		std::shared_ptr<Shader> load(const std::string& name, const std::string& filepath);
+		std::shared_ptr<Shader> load_impl(const std::string& filepath);
+		std::shared_ptr<Shader> load_impl(const std::string& name, const std::string& filepath);
+		std::shared_ptr<Shader> get_impl(const std::string& name);
 
-		std::shared_ptr<Shader> get(const std::string& name);
 		bool exists(const std::string& name) const;
-	private:
+
 		std::unordered_map<std::string, std::shared_ptr<Shader>> m_shaders;
+
+		static ShaderLibrary* s_instance;
 	};
 
 }
