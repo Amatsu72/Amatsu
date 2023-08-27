@@ -26,7 +26,10 @@ namespace Engine {
 		{
 			s_renderAPI->draw_indexed(vertex_array, count);
 		}
-
+		inline static void draw(const std::shared_ptr<VertexArray>& vertex_array, uint32_t count)
+		{
+			s_renderAPI->draw(vertex_array, count);
+		}
 	private:
 		static RenderAPI* s_renderAPI;
 	};

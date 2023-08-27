@@ -83,6 +83,7 @@ namespace Engine {
 		std::array<aiTextureType, tex_type_num> ai_types = { aiTextureType_DIFFUSE, aiTextureType_SPECULAR };
 		std::array<Texture::Type, tex_type_num> types = { Texture::Type::Diffuse,Texture::Type::Specular };
 
+		//static int index = 0;
 		for (uint32_t tex_type_index = 0; tex_type_index < tex_type_num; ++tex_type_index)
 		{
 			aiTextureType ai_type = ai_types[tex_type_index];
@@ -97,6 +98,10 @@ namespace Engine {
 				std::string temp = str.C_Str();
 				auto last_dot = temp.rfind('.');
 				auto count = last_dot == std::string::npos ? temp.size() : last_dot;
+				//std::string name = temp.substr(0, count) + (std::to_string)(index);
+				//index++;
+				//std::shared_ptr<Texture2D> texture = TextureLibrary::load(name, path);
+				//material->set_texture_map(texture, type);
 				if (!TextureLibrary::exists(temp.substr(0,count)))
 				{
 					std::shared_ptr<Texture2D> texture = TextureLibrary::load(path);

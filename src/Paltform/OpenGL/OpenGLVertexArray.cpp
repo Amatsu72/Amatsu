@@ -73,4 +73,14 @@ namespace Engine {
 		m_index_buffers = index_buffer;
 	}
 
+	uint32_t OpenGLVertexArray::get_vertex_count() const
+	{
+		uint32_t count = 0;
+		for (auto& vertex_buffer : m_vertex_buffers)
+		{
+			count += vertex_buffer->get_vertex_count();
+		}
+		return count;
+	}
+
 }

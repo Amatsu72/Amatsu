@@ -54,6 +54,7 @@ namespace Engine {
 		virtual void set_layout(const BufferLayout& layout) = 0;
 
 		virtual void set_data(const void* data, uint32_t size) = 0;
+		virtual uint32_t get_vertex_count() const = 0;
 
 		static std::shared_ptr<VertexBuffer> create(float* vertices, uint32_t size);
 		static std::shared_ptr<VertexBuffer> create(uint32_t size);

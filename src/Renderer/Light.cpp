@@ -29,6 +29,7 @@ namespace Engine {
 	void DirectionalLight::bind(std::shared_ptr<Shader>& shader)
 	{
 		shader->bind();
+		std::dynamic_pointer_cast<OpenGLShader>(shader)->set_float3("u_DirectionalLight.color", m_color);
 		std::dynamic_pointer_cast<OpenGLShader>(shader)->set_float3("u_DirectionalLight.direction", m_direction);
 		std::dynamic_pointer_cast<OpenGLShader>(shader)->set_float("u_DirectionalLight.ambient", m_ambient_intensity);
 		std::dynamic_pointer_cast<OpenGLShader>(shader)->set_float("u_DirectionalLight.diffuse", m_diffuse_intensity);
@@ -47,6 +48,7 @@ namespace Engine {
 	void PointLight::bind(std::shared_ptr<Shader>& shader, int index)
 	{
 		shader->bind();
+		std::dynamic_pointer_cast<OpenGLShader>(shader)->set_float3(string_format("u_PointLights[%d].color", index), m_color);
 		std::dynamic_pointer_cast<OpenGLShader>(shader)->set_float3(string_format("u_PointLights[%d].position", index), m_position);
 
 		std::dynamic_pointer_cast<OpenGLShader>(shader)->set_float(string_format("u_PointLights[%d].ambient", index), m_ambient_intensity);
@@ -77,6 +79,7 @@ namespace Engine {
 	void SpotLight::bind(std::shared_ptr<Shader>& shader)
 	{
 		shader->bind();
+		std::dynamic_pointer_cast<OpenGLShader>(shader)->set_float3("u_SpotLight.color", m_color);
 		std::dynamic_pointer_cast<OpenGLShader>(shader)->set_float3("u_SpotLight.position", m_position);
 		std::dynamic_pointer_cast<OpenGLShader>(shader)->set_float3("u_SpotLight.direction", m_direction);
 

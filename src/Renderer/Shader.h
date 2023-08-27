@@ -37,6 +37,10 @@ namespace Engine {
 		{
 			return s_instance->get_impl(name);
 		}
+		static std::unordered_map<std::string, std::shared_ptr<Shader>>& get_all_shaders() 
+		{ 
+			return s_instance->get_all_shaders_impl(); 
+		}
 
 	private:
 		void add(const std::string& name, const std::shared_ptr<Shader>& shader);
@@ -45,6 +49,7 @@ namespace Engine {
 		std::shared_ptr<Shader> load_impl(const std::string& filepath);
 		std::shared_ptr<Shader> load_impl(const std::string& name, const std::string& filepath);
 		std::shared_ptr<Shader> get_impl(const std::string& name);
+		std::unordered_map<std::string, std::shared_ptr<Shader>>& get_all_shaders_impl() { return m_shaders; }
 
 		bool exists(const std::string& name) const;
 

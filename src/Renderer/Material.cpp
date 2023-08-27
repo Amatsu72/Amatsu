@@ -37,7 +37,7 @@ namespace Engine {
         shader->bind();
         std::dynamic_pointer_cast<OpenGLShader>(shader)->set_int("u_Material.diffuse", s_diffuse_slot);
         std::dynamic_pointer_cast<OpenGLShader>(shader)->set_int("u_Material.specular", s_specular_slot);
-        std::dynamic_pointer_cast<OpenGLShader>(shader)->set_float("u_Shininess", m_shininess);
+        std::dynamic_pointer_cast<OpenGLShader>(shader)->set_float("u_Material.shininess", m_shininess);
     }
 
 }

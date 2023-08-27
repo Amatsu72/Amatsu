@@ -34,7 +34,7 @@ namespace Engine {
 		float m_z_near, m_z_far;
 		float m_fov = 45.0f;
 
-		float m_movement_speed = 2.5f;
+		float m_movement_speed = 10.0f;
 		float m_zoom_speed = 1.0f;
 		float m_mouse_speed = 0.1f;
 

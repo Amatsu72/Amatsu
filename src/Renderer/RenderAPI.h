@@ -18,6 +18,7 @@ namespace Engine {
 		virtual void set_clear_color(const glm::vec4& color) = 0;
 
 		virtual void draw_indexed(const std::shared_ptr<VertexArray>& vertexArray, uint32_t indexCount = 0) = 0;
+		virtual void draw(const std::shared_ptr<VertexArray>& vertexArray, uint32_t count) = 0;
 
 		inline static API get_API() { return s_API; }
 	private:

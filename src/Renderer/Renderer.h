@@ -3,6 +3,7 @@
 #include "Camera.h"
 #include "Shader.h"
 #include "Model.h"
+#include "Light.h"
 
 namespace Engine {
 
@@ -12,7 +13,10 @@ namespace Engine {
 		static void init();
 		static void on_window_resize(uint32_t width, uint32_t height);
 
-		static void begin_scene(Camera& camera);
+		static void begin_scene(Camera& camera,
+			const std::shared_ptr<DirectionalLight>& directional_light = nullptr,
+			const std::vector<std::shared_ptr<PointLight>>& point_lights = {},
+			const std::shared_ptr<SpotLight>& spot_light = nullptr);
 		static void end_scene();
 
 		static void submit(const std::shared_ptr<Shader>& shader, 

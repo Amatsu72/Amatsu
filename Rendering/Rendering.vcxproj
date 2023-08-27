@@ -174,13 +174,14 @@
     <ClInclude Include="..\src\UI\UI.h" />
   </ItemGroup>
   <ItemGroup>
-    <None Include="..\assets\shaders\ColorShader.glsl" />
+    <None Include="..\assets\shaders\Light.glsl" />
     <None Include="..\assets\shaders\Model.glsl" />
     <None Include="..\assets\shaders\Texture.glsl" />
   </ItemGroup>
   <ItemGroup>
     <Image Include="..\assets\textures\Checkerboard.png" />
     <Image Include="..\assets\textures\ChernoLogo.png" />
+    <Image Include="..\assets\textures\marble.jpg" />
   </ItemGroup>
   <Import Project="$(VCTargetsPath)\Microsoft.Cpp.targets" />
   <ImportGroup Label="ExtensionTargets">

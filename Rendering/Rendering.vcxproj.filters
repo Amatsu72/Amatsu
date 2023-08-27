@@ -224,7 +224,7 @@
     </ClInclude>
   </ItemGroup>
   <ItemGroup>
-    <None Include="..\assets\shaders\ColorShader.glsl">
+    <None Include="..\assets\shaders\Light.glsl">
       <Filter>assets\shaders</Filter>
     </None>
     <None Include="..\assets\shaders\Texture.glsl">
@@ -239,6 +239,9 @@
       <Filter>assets\textures</Filter>
     </Image>
     <Image Include="..\assets\textures\ChernoLogo.png">
+      <Filter>assets\textures</Filter>
+    </Image>
+    <Image Include="..\assets\textures\marble.jpg">
       <Filter>assets\textures</Filter>
     </Image>
   </ItemGroup>

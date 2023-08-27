@@ -16,11 +16,14 @@ namespace Engine {
 		void set_data(const void* data, uint32_t size) override;
 
 		const BufferLayout& get_layout() const override { return m_layout; }
-		void set_layout(const BufferLayout& layout) override { m_layout = layout; }
+		void set_layout(const BufferLayout& layout) override;
 
+		uint32_t get_vertex_count() const override { return m_vertex_count; }
 	private:
 		uint32_t m_render_id;
 		BufferLayout m_layout;
+		uint32_t m_vertex_count;
+		uint32_t m_size;
 	};
 
 	class OpenGLIndexBuffer :public IndexBuffer

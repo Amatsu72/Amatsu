@@ -9,6 +9,7 @@ namespace Engine {
 		glCreateBuffers(1, &m_render_id);
 		glBindBuffer(GL_ARRAY_BUFFER, m_render_id);
 		glBufferData(GL_ARRAY_BUFFER, size, vertices, GL_STATIC_DRAW);
+		m_size = size;
 	}
 
 	OpenGLVertexBuffer::OpenGLVertexBuffer(uint32_t size)
@@ -16,6 +17,7 @@ namespace Engine {
 		glCreateBuffers(1, &m_render_id);
 		glBindBuffer(GL_ARRAY_BUFFER, m_render_id);
 		glBufferData(GL_ARRAY_BUFFER, size, nullptr, GL_DYNAMIC_DRAW);
+		m_size = size;
 	}
 
 	OpenGLVertexBuffer::~OpenGLVertexBuffer()
@@ -37,6 +39,12 @@ namespace Engine {
 	{
 		glBindBuffer(GL_ARRAY_BUFFER, m_render_id);
 		glBufferSubData(GL_ARRAY_BUFFER, 0, size, data);
+	}
+
+	void OpenGLVertexBuffer::set_layout(const BufferLayout& layout)
+	{
+		m_layout = layout;
+		m_vertex_count = m_size / layout.get_stride();
 	}
 
 	///////////////////////////////////////////////////////////////////////////

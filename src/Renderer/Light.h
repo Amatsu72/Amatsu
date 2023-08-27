@@ -12,26 +12,29 @@ namespace Engine{
 		inline float get_ambient_intensity() const { return m_ambient_intensity; }
 		inline float get_diffuse_intensity() const { return m_diffuse_intensity; }
 		inline float get_specular_intensity() const { return m_specular_intensity; }
+		inline const glm::vec3& get_color() const { return m_color; }
 
 		inline void set_ambient_intensity(float ambient) { m_ambient_intensity = ambient; }
 		inline void set_diffuse_intensity(float diffuse) { m_ambient_intensity = diffuse; }
 		inline void set_specular_intensity(float specular) { m_ambient_intensity = specular; }
+		inline void set_color(const glm::vec3& color) { m_color = color; }
 		void set_intensity(float ambient, float diffuse, float specular);
 
 	protected:
-		Light(float ambient, float diffuse, float specular)
-			:m_ambient_intensity(ambient), m_diffuse_intensity(diffuse), m_specular_intensity(specular) {}
+		Light(const glm::vec3& color, float ambient, float diffuse, float specular)
+			:m_color(color), m_ambient_intensity(ambient), m_diffuse_intensity(diffuse), m_specular_intensity(specular) {}
 
 		float m_ambient_intensity;
 		float m_diffuse_intensity;
 		float m_specular_intensity;
+		glm::vec3 m_color;
 	};
 
 	class DirectionalLight :public Light
 	{
 	public:
-		DirectionalLight(const glm::vec3& direction, float ambient, float diffuse, float specular)
-			:m_direction(direction), Light(ambient, diffuse, specular) {}
+		DirectionalLight(const glm::vec3& color, const glm::vec3& direction, float ambient, float diffuse, float specular)
+			:m_direction(direction), Light(color, ambient, diffuse, specular) {}
 
 		inline const glm::vec3& get_direction() const { return m_direction; }
 		inline void set_direction(const glm::vec3& direction) { m_direction = direction; }
@@ -45,9 +48,9 @@ namespace Engine{
 	class PointLight :public Light
 	{
 	public:
-		PointLight(const glm::vec3& position, float ambient, float diffuse, float specular,
+		PointLight(const glm::vec3& color, const glm::vec3& position, float ambient, float diffuse, float specular,
 			float constant = 1.0f, float linear = 0.09f, float quadratic = 0.032f)
-			:m_position(position),m_constant(constant),m_linear(linear),m_quadratic(quadratic),Light(ambient, diffuse, specular) {}
+			:m_position(position),m_constant(constant),m_linear(linear),m_quadratic(quadratic),Light(color, ambient, diffuse, specular) {}
 
 		inline const glm::vec3& get_position() const { return m_position; }
 		inline void set_position(const glm::vec3& position) { m_position = position; }
@@ -73,10 +76,10 @@ namespace Engine{
 	class SpotLight :public Light
 	{
 	public:
-		SpotLight(const glm::vec3& position, const glm::vec3& direction, float ambient, float diffuse, float specular,
-			float cut_off, float outer_cut_off, float constant = 1.0f, float linear = 0.09f, float quadratic = 0.032f)
+		SpotLight(const glm::vec3& color, const glm::vec3& position, const glm::vec3& direction, float ambient, float diffuse, 
+			float specular, float cut_off, float outer_cut_off, float constant = 1.0f, float linear = 0.09f, float quadratic = 0.032f)
 			:m_position(position), m_direction(direction), m_constant(constant), m_linear(linear), m_quadratic(quadratic),
-			m_cut_off(cut_off), m_outer_cut_off(outer_cut_off), Light(ambient, diffuse, specular) {}
+			m_cut_off(cut_off), m_outer_cut_off(outer_cut_off), Light(color, ambient, diffuse, specular) {}
 
 		inline const glm::vec3& get_position() const { return m_position; }
 		inline void set_position(const glm::vec3& position) { m_position = position; }

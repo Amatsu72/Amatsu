@@ -17,6 +17,8 @@ namespace Engine {
 		virtual const std::vector<std::shared_ptr<VertexBuffer>>& get_vertex_buffers() const = 0;
 		virtual const std::shared_ptr<IndexBuffer>& get_index_buffers() const = 0;
 
+		virtual uint32_t get_vertex_count() const = 0;
+
 		static std::shared_ptr<VertexArray> create();
 	};
 
