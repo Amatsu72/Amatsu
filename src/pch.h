@@ -5,6 +5,7 @@
 #include <utility>
 #include <algorithm>
 #include <functional>
+#include <filesystem>
 
 #include <string>
 #include <array>
@@ -12,5 +13,6 @@
 #include <vector>
 #include <unordered_map>
 #include <unordered_set>
+#include <map>
 
 #include <Windows.h>

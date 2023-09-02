@@ -39,6 +39,7 @@ namespace Engine {
 				m_ui->end();
 			}
 			m_window->on_update();
+			//std::cout << 1.0/timesetp << std::endl;
 		}
 	}
 

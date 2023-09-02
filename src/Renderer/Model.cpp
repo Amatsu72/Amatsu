@@ -79,9 +79,13 @@ namespace Engine {
 	{
 		std::shared_ptr<Material> material = std::make_shared<Material>();
 		
-		constexpr uint32_t tex_type_num = 2;
-		std::array<aiTextureType, tex_type_num> ai_types = { aiTextureType_DIFFUSE, aiTextureType_SPECULAR };
-		std::array<Texture::Type, tex_type_num> types = { Texture::Type::Diffuse,Texture::Type::Specular };
+		//constexpr uint32_t tex_type_num = 2;
+		//std::array<aiTextureType, tex_type_num> ai_types = { aiTextureType_DIFFUSE, aiTextureType_SPECULAR };
+		//std::array<Texture::Type, tex_type_num> types = { Texture::Type::Diffuse,Texture::Type::Specular };
+
+		constexpr uint32_t tex_type_num = 3;
+		std::array<aiTextureType, tex_type_num> ai_types = { aiTextureType_DIFFUSE, aiTextureType_SPECULAR, aiTextureType_EMISSION_COLOR };
+		std::array<Texture::Type, tex_type_num> types = { Texture::Type::Diffuse,Texture::Type::Specular, Texture::Type::Emission };
 
 		//static int index = 0;
 		for (uint32_t tex_type_index = 0; tex_type_index < tex_type_num; ++tex_type_index)
@@ -112,4 +116,17 @@ namespace Engine {
 		return material;
 	}
 	
+	std::shared_ptr<Model> Model::create(const std::string& path)
+	{
+		return std::make_shared<Model>(path);
+	}
+
+	void Model::add_instance_buffer(std::shared_ptr<VertexBuffer>& instance_buffer)
+	{
+		for (auto& mesh : m_meshes)
+		{
+			mesh.get_vertex_array()->add_instance_buffer_mat4(instance_buffer);
+		}
+	}
+
 }

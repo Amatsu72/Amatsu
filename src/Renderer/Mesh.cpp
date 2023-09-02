@@ -26,7 +26,7 @@ namespace Engine {
 		m_vertices = std::move(other.m_vertices);
 		m_indices = std::move(other.m_indices);
 		m_material = std::move(other.m_material);
-
+	
 		m_vertex_array = std::move(other.m_vertex_array);
 		m_vertex_buffer = std::move(other.m_vertex_buffer);
 		m_index_buffer = std::move(other.m_index_buffer);

@@ -9,6 +9,7 @@ namespace Engine {
 	public:
 		OpenGLTexture2D(uint32_t width, uint32_t height, void* data = nullptr);
 		OpenGLTexture2D(const std::string& path);
+		OpenGLTexture2D(uint32_t width, uint32_t height, bool msaa, uint32_t samples = 4);
 		~OpenGLTexture2D() override;
 
 		uint32_t get_width() const override { return m_width; }
@@ -24,4 +25,16 @@ namespace Engine {
 		GLenum m_internal_format, m_data_format;		
 	};
 
+	class OpenGLCubeMap :public CubeMap
+	{
+	public:
+		OpenGLCubeMap(const std::string& folder_path);
+		~OpenGLCubeMap() override;
+
+		void bind() const override;
+
+	private:
+		uint32_t m_render_id;
+	};
+			
 }

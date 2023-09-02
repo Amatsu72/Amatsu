@@ -29,7 +29,7 @@ namespace Engine {
 		{
 			move_mesh(std::move(other));
 		}
-
+		
 		Mesh& operator=(Mesh&& other)
 		{
 			move_mesh(std::move(other));

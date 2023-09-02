@@ -34,6 +34,9 @@
     <Filter Include="assets\textures">
       <UniqueIdentifier>{e0ee27ef-410f-4ada-81b7-de8482c7d6bd}</UniqueIdentifier>
     </Filter>
+    <Filter Include="assets\textures\skybox">
+      <UniqueIdentifier>{94ba0f8f-f4d8-4a05-b000-97299a8630ad}</UniqueIdentifier>
+    </Filter>
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="..\3rdparty\stb_image\stb_image.cpp">
@@ -230,7 +233,28 @@
     <None Include="..\assets\shaders\Texture.glsl">
       <Filter>assets\shaders</Filter>
     </None>
-    <None Include="..\assets\shaders\Model.glsl">
+    <None Include="..\assets\shaders\Phong.glsl">
+      <Filter>assets\shaders</Filter>
+    </None>
+    <None Include="..\assets\shaders\Outlining.glsl">
+      <Filter>assets\shaders</Filter>
+    </None>
+    <None Include="..\assets\shaders\FrameBuffer.glsl">
+      <Filter>assets\shaders</Filter>
+    </None>
+    <None Include="..\assets\shaders\CubeMap.glsl">
+      <Filter>assets\shaders</Filter>
+    </None>
+    <None Include="..\assets\shaders\Reflect.glsl">
+      <Filter>assets\shaders</Filter>
+    </None>
+    <None Include="..\assets\shaders\Box.glsl">
+      <Filter>assets\shaders</Filter>
+    </None>
+    <None Include="..\assets\shaders\instance.glsl">
+      <Filter>assets\shaders</Filter>
+    </None>
+    <None Include="..\assets\shaders\BlinnPhong.glsl">
       <Filter>assets\shaders</Filter>
     </None>
   </ItemGroup>
@@ -242,6 +266,33 @@
       <Filter>assets\textures</Filter>
     </Image>
     <Image Include="..\assets\textures\marble.jpg">
+      <Filter>assets\textures</Filter>
+    </Image>
+    <Image Include="..\assets\textures\window.png">
+      <Filter>assets\textures</Filter>
+    </Image>
+    <Image Include="..\assets\textures\grass.png">
+      <Filter>assets\textures</Filter>
+    </Image>
+    <Image Include="..\assets\textures\skybox\back.jpg">
+      <Filter>assets\textures\skybox</Filter>
+    </Image>
+    <Image Include="..\assets\textures\skybox\bottom.jpg">
+      <Filter>assets\textures\skybox</Filter>
+    </Image>
+    <Image Include="..\assets\textures\skybox\front.jpg">
+      <Filter>assets\textures\skybox</Filter>
+    </Image>
+    <Image Include="..\assets\textures\skybox\left.jpg">
+      <Filter>assets\textures\skybox</Filter>
+    </Image>
+    <Image Include="..\assets\textures\skybox\right.jpg">
+      <Filter>assets\textures\skybox</Filter>
+    </Image>
+    <Image Include="..\assets\textures\skybox\top.jpg">
+      <Filter>assets\textures\skybox</Filter>
+    </Image>
+    <Image Include="..\assets\textures\container2.png">
       <Filter>assets\textures</Filter>
     </Image>
   </ItemGroup>

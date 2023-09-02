@@ -98,6 +98,19 @@ namespace Engine {
 		return nullptr;
 	}
 
+	std::shared_ptr<VertexBuffer> VertexBuffer::create(glm::mat4* instance_matrix, uint32_t size)
+	{
+		switch (Renderer::get_API())
+		{
+		case RenderAPI::API::None:
+			std::cout << "RendererAPI::None is currently not supported!" << std::endl;
+			return nullptr;
+		case RenderAPI::API::OpenGL:
+			return std::make_shared<OpenGLVertexBuffer>(instance_matrix, size);
+		}
+		return nullptr;
+	}
+
 	/////////////////////////////////////////////////////////////////////////////////////////////////////// 
 
 	std::shared_ptr<IndexBuffer> IndexBuffer::create(uint32_t* indices, uint32_t count)
@@ -109,6 +122,45 @@ namespace Engine {
 				return nullptr;
 			case RenderAPI::API::OpenGL:
 				return std::make_shared<OpenGLIndexBuffer>(indices, count);
+		}
+		return nullptr;
+	}
+
+	std::shared_ptr<FrameBuffer> FrameBuffer::create(uint32_t width, uint32_t height)
+	{
+		switch (Renderer::get_API())
+		{
+			case RenderAPI::API::None:
+				std::cout << "RendererAPI::None is currently not supported!" << std::endl;
+				return nullptr;
+			case RenderAPI::API::OpenGL:
+				return std::make_shared<OpenGLFrameBuffer>(width, height);
+		}
+		return nullptr;
+	}
+
+	std::shared_ptr<UniformBuffer> UniformBuffer::create(const BufferLayout& layout, uint32_t index)
+	{
+		switch (Renderer::get_API())
+		{
+			case RenderAPI::API::None:
+				std::cout << "RendererAPI::None is currently not supported!" << std::endl;
+				return nullptr;
+			case RenderAPI::API::OpenGL:
+				return std::make_shared<OpenGLUniformBuffer>(layout, index);
+		}
+		return nullptr;
+	}
+
+	std::shared_ptr<RenderBuffer> RenderBuffer::create(uint32_t width, uint32_t height, bool msaa, uint32_t samples)
+	{
+		switch(Renderer::get_API())
+		{
+			case RenderAPI::API::None:
+				std::cout << "RendererAPI::None is currently not supported!" << std::endl;
+				return nullptr;
+			case RenderAPI::API::OpenGL:
+				return std::make_shared<OpenGLRenderBuffer>(width, height, msaa, samples);
 		}
 		return nullptr;
 	}

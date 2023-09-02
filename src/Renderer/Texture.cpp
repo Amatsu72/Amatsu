@@ -45,6 +45,27 @@ namespace Engine {
 		return Texture2D::create(1, 1, &flat_color_data);
 	}
 
+	std::shared_ptr<Texture2D> Texture2D::create_attachment(uint32_t width, uint32_t height, bool msaa, uint32_t samples)
+	{
+		return std::make_shared<OpenGLTexture2D>(width, height, msaa, samples);
+	}
+
+	///////////////////////////////////////////////////////////////////////////////////////////////////
+
+	std::shared_ptr<CubeMap> CubeMap::create(const std::string& folder_path)
+	{
+		switch (Renderer::get_API())
+		{
+		case RenderAPI::API::None:
+			std::cout << "RenderAPI::None is currently nor support!" << std::endl;
+			return nullptr;
+		case RenderAPI::API::OpenGL:
+			return std::make_shared<OpenGLCubeMap>(folder_path);
+		}
+		std::cout << "Unkonwn RenderAPI!" << std::endl;
+		return nullptr;
+	}
+
 	///////////////////////////////////////////////////////////////////////////////////////////////////
 
 	void TextureLibrary::add(const std::string& name, const std::shared_ptr<Texture2D>& texture)

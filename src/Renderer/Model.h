@@ -17,6 +17,11 @@ namespace Engine {
 			load_model(path);
 		}
 		const std::vector<Mesh>& get_meshes() const { return m_meshes; }
+
+		static std::shared_ptr<Model> create(const std::string& path);
+
+		void add_instance_buffer(std::shared_ptr<VertexBuffer>& instance_buffer);
+
 	private:
 		void load_model(const std::string& path);
 		void process_node(aiNode* node, const aiScene* scene);
@@ -24,7 +29,7 @@ namespace Engine {
 		std::shared_ptr<Material> load_material(aiMaterial* m);
 	
 		std::vector<Mesh> m_meshes;
-		std::string m_directory;
+		std::string m_directory;	
 	};
 
 }

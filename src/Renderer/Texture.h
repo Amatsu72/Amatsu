@@ -6,7 +6,7 @@ namespace Engine {
 	class Texture
 	{
 	public:	
-		enum Type { Diffuse, Specular };
+		enum Type { Diffuse, Specular, Emission, Reflect };
 		virtual ~Texture() = default;
 		virtual uint32_t get_width() const = 0;
 		virtual uint32_t get_height() const = 0;
@@ -21,6 +21,16 @@ namespace Engine {
 		static std::shared_ptr<Texture2D> create(uint32_t width, uint32_t height, void* data);
 		static std::shared_ptr<Texture2D> create(const std::string& path);
 		static std::shared_ptr<Texture2D> create_flat_color(const glm::vec4& color);
+		static std::shared_ptr<Texture2D> create_attachment(uint32_t width, uint32_t height, bool msaa, uint32_t samples = 4);
+	};
+	
+	class CubeMap
+	{
+	public:
+		virtual void bind() const = 0;
+		virtual ~CubeMap() = default;
+
+		static std::shared_ptr<CubeMap> create(const std::string& path);
 	};
 
 	class TextureLibrary

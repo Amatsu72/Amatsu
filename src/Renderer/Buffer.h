@@ -1,4 +1,6 @@
 #pragma once
+#include <glm.hpp>
+#include "Texture.h"
 
 namespace Engine {
 
@@ -58,6 +60,7 @@ namespace Engine {
 
 		static std::shared_ptr<VertexBuffer> create(float* vertices, uint32_t size);
 		static std::shared_ptr<VertexBuffer> create(uint32_t size);
+		static std::shared_ptr<VertexBuffer> create(glm::mat4* instance_matrix, uint32_t size);
 	};
 
 	class IndexBuffer
@@ -73,4 +76,44 @@ namespace Engine {
 		static std::shared_ptr<IndexBuffer> create(uint32_t* indices, uint32_t count);
 	};
 
+	class FrameBuffer
+	{
+	public:
+		virtual ~FrameBuffer() {}
+		 
+		virtual void bind() const = 0;
+		virtual void unbind() const = 0;
+		virtual void check() = 0;
+		virtual void blit() = 0;
+		virtual void attach(const std::shared_ptr<Texture2D>& texture) = 0;
+		virtual void texture_bind() = 0;
+		static std::shared_ptr<FrameBuffer> create(uint32_t width, uint32_t height);
+	};
+
+	class UniformBuffer
+	{
+	public:
+		virtual ~UniformBuffer() {}
+
+		virtual const BufferLayout& get_layout() const = 0;
+
+		virtual void set_int(int value, uint32_t offset) = 0;
+		virtual void set_float(float value, uint32_t offset) = 0;
+		virtual void set_float3(const glm::vec3& value, uint32_t offset) = 0;
+		virtual void set_float4(const glm::vec4& value, uint32_t offset) = 0;
+		virtual void set_mat4(const glm::mat4& value, uint32_t offset) = 0;
+
+		static std::shared_ptr<UniformBuffer> create(const BufferLayout& layout, uint32_t index);
+	};
+
+	class RenderBuffer
+	{
+	public:
+		virtual ~RenderBuffer() {}
+		virtual void bind() const = 0;
+		virtual void unbind() const = 0;
+		virtual void attach_frame_buffer() = 0;
+
+		static std::shared_ptr<RenderBuffer> create(uint32_t width, uint32_t height, bool msaa, uint32_t samples = 4);
+	};
 }

@@ -59,6 +59,9 @@ namespace Engine {
 				std::cout << "Could not intialized GLFW!" << std::endl;
 		}
 
+		if (m_msaa)
+			glfwWindowHint(GLFW_SAMPLES, 4);
+
 		m_window = glfwCreateWindow((int)props.Width, (int)props.Height, m_data.Title.c_str(), nullptr, nullptr);
 		s_GLFWWindowCount++;
 

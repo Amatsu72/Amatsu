@@ -52,16 +52,15 @@ namespace Engine {
 		glBindVertexArray(m_render_id);
 		vertex_buffer->bind();
 
-		uint32_t index = 0;
 		const auto& layout = vertex_buffer->get_layout();
 		for (const auto& element : layout)
 		{
-			glEnableVertexAttribArray(index);
-			glVertexAttribPointer(index, element.get_component_count(),
+			glEnableVertexAttribArray(m_index);
+			glVertexAttribPointer(m_index, element.get_component_count(),
 				shader_data_type_to_opengl_base_type(element.type),
 				element.normalized ? GL_TRUE : GL_FALSE,
 				layout.get_stride(), (const void*)element.offset);
-			++index;
+			++m_index;
 		}
 		m_vertex_buffers.push_back(vertex_buffer);
 	}
@@ -71,6 +70,29 @@ namespace Engine {
 		glBindVertexArray(m_render_id);
 		index_buffer->bind();
 		m_index_buffers = index_buffer;
+	}
+	
+	void OpenGLVertexArray::add_instance_buffer_mat4(std::shared_ptr<VertexBuffer>& vertex_buffer)
+	{
+		glBindVertexArray(m_render_id);
+		vertex_buffer->bind();
+
+		const auto& layout = vertex_buffer->get_layout();
+
+		glEnableVertexAttribArray(m_index);
+		glVertexAttribPointer(m_index, 4, GL_FLOAT, GL_FALSE, layout.get_stride(), (const void*)0);
+		glEnableVertexAttribArray(m_index + 1);
+		glVertexAttribPointer(m_index + 1, 4, GL_FLOAT, GL_FALSE, layout.get_stride(), (const void*)(layout.get_stride() / 4));
+		glEnableVertexAttribArray(m_index + 2);
+		glVertexAttribPointer(m_index + 2, 4, GL_FLOAT, GL_FALSE, layout.get_stride(), (const void*)(layout.get_stride() / 4 * 2));
+		glEnableVertexAttribArray(m_index + 3);
+		glVertexAttribPointer(m_index + 3, 4, GL_FLOAT, GL_FALSE, layout.get_stride(), (const void*)(layout.get_stride() / 4 * 3));
+
+		glVertexAttribDivisor(m_index, 1);;
+		glVertexAttribDivisor(m_index + 1, 1);
+		glVertexAttribDivisor(m_index + 2, 1);
+		glVertexAttribDivisor(m_index + 3, 1);
+		glBindVertexArray(0);
 	}
 
 	uint32_t OpenGLVertexArray::get_vertex_count() const

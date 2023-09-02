@@ -41,6 +41,8 @@ namespace Engine {
 			EventCallbackFn EventCallback;
 		};
 		WindowData m_data;
+
+		bool m_msaa = false;
 	};
 
 }

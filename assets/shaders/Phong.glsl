@@ -1,13 +1,16 @@
 #type vertex
-#version 330 core
+#version 460 core
 			
 layout(location = 0) in vec3 a_Position;
 layout(location = 1) in vec3 a_Normal;
 layout(location = 2) in vec2 a_TexCoord;
 
-uniform mat4 u_ViewProjection;
 uniform mat4 u_Transform;
-
+layout(std140, binding = 0) uniform Matrices
+{
+    mat4 u_Projection;
+	mat4 u_View;
+};
 out vec2 v_TexCoord;
 out vec3 v_Normal;
 out vec3 v_FragPos;
@@ -15,19 +18,18 @@ out vec3 v_FragPos;
 void main()
 {
 	v_TexCoord = a_TexCoord;
-	gl_Position = u_ViewProjection * u_Transform * vec4(a_Position, 1.0);
+	gl_Position = u_Projection * u_View * u_Transform * vec4(a_Position, 1.0);
 	v_Normal = mat3(transpose(inverse(u_Transform))) * a_Normal; 
 	v_FragPos = vec3(u_Transform * vec4(a_Position, 1.0));
 }
 
 #type fragment
-#version 330 core
-		
+#version 460 core
+out vec4 color;	
+
 in vec2 v_TexCoord;
 in vec3 v_Normal;
 in vec3 v_FragPos;
-
-out vec4 color;
 
 struct DirectionalLight {
 	vec3 direction;
@@ -55,7 +57,6 @@ struct PointLight {
 uniform int u_PointLightCount = 0;
 uniform PointLight u_PointLights[MAX_POINT_LIGHT];
 
-
 struct SpotLight {
 	vec3 position;
 	vec3 direction;
@@ -77,15 +78,21 @@ uniform SpotLight u_SpotLight;
 struct Material {
 	sampler2D diffuse;
 	sampler2D specular;
+	sampler2D emission;
+	//sampler2D reflect;
+
 	float shininess;
 };
 uniform Material u_Material;
 
 uniform vec3 u_ViewPosition;
 
+//uniform samplerCube u_Skybox;
+
 vec3 CalDirLight(DirectionalLight dirLight);
 vec3 CalPointLight(PointLight light);
 vec3 CalSpotLight(SpotLight light);
+//vec3 CalReflect();
 
 vec3 normal = normalize(v_Normal);
 vec3 viewDir = normalize(u_ViewPosition - v_FragPos);
@@ -101,8 +108,12 @@ void main()
 		pointColor += CalPointLight(u_PointLights[i]);
 	}
 	vec3 spotLight = CalSpotLight(u_SpotLight);
-	vec3 result = dirColor + pointColor + spotLight;
+	vec3 emission = vec3(texture(u_Material.emission, v_TexCoord));
+	//vec3 reflect = CalReflect();
+
+	vec3 result = dirColor + pointColor + spotLight + emission;
 	color = vec4(result, 1.0);
+	//color = vec4(vec3(gl_FragCoord.z), 1.0);
 }
 
 vec3 CalDirLight(DirectionalLight light)
@@ -118,7 +129,7 @@ vec3 CalDirLight(DirectionalLight light)
 
 	// specular
 	vec3 reflectDir = reflect(-lightDir, normal);
-	float spec = pow(max(dot(viewDir, reflectDir), 0.0), u_Material.shininess);
+	float spec = pow(max(dot(viewDir, reflectDir), 0.0), u_Material.shininess/2.0);
 	vec3 specular = light.specular * light.color * spec * reflectColor;
 
 	return ambient + diffuse + specular;
@@ -142,7 +153,7 @@ vec3 CalPointLight(PointLight light)
 
 	// specular
 	vec3 reflectDir = reflect(-lightDir, normal);
-	float spec = pow(max(dot(viewDir, reflectDir), 0.0), u_Material.shininess);
+	float spec = pow(max(dot(viewDir, reflectDir), 0.0), u_Material.shininess/2.0);
 	vec3 specular = light.specular * light.color * spec * reflectColor;
 
 	return (ambient + diffuse + specular) * attenuation;
@@ -170,8 +181,16 @@ vec3 CalSpotLight(SpotLight light)
 
 	// specular
 	vec3 reflectDir = reflect(-lightDir, normal);
-	float spec = pow(max(dot(viewDir, reflectDir), 0.0), u_Material.shininess);
+	float spec = pow(max(dot(viewDir, reflectDir), 0.0), u_Material.shininess/2.0);
 	vec3 specular = light.specular * light.color * spec * reflectColor;
 
 	return (ambient + diffuse + specular) * attenuation * intensity;
 }
+
+//vec3 CalReflect()
+//{
+//	vec3 I = normalize(v_FragPos - u_ViewPosition);
+//    vec3 R = reflect(I, normalize(v_Normal));
+//	vec3 result = vec3(texture(u_Material.reflect, v_TexCoord)) + texture(u_Skybox,R).rgb;
+//	return result;
+//}
