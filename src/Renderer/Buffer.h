@@ -86,7 +86,7 @@ namespace Engine {
 		virtual void check() = 0;
 		virtual void blit() = 0;
 		virtual void attach(const std::shared_ptr<Texture2D>& texture) = 0;
-		virtual void texture_bind() = 0;
+		virtual void texture_bind(uint32_t index = 0) = 0;
 		static std::shared_ptr<FrameBuffer> create(uint32_t width, uint32_t height);
 	};
 

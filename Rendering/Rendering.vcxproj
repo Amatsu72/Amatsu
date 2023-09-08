@@ -177,15 +177,21 @@
     <None Include="..\assets\shaders\BlinnPhong.glsl" />
     <None Include="..\assets\shaders\Box.glsl" />
     <None Include="..\assets\shaders\CubeMap.glsl" />
+    <None Include="..\assets\shaders\NormalMap.glsl" />
+    <None Include="..\assets\shaders\TestQuad.glsl" />
+    <None Include="..\assets\shaders\Depth.glsl" />
     <None Include="..\assets\shaders\FrameBuffer.glsl" />
     <None Include="..\assets\shaders\Light.glsl" />
     <None Include="..\assets\shaders\Phong.glsl" />
     <None Include="..\assets\shaders\Outlining.glsl" />
     <None Include="..\assets\shaders\Reflect.glsl" />
     <None Include="..\assets\shaders\instance.glsl" />
+    <None Include="..\assets\shaders\ShadowMapping.glsl" />
     <None Include="..\assets\shaders\Texture.glsl" />
   </ItemGroup>
   <ItemGroup>
+    <Image Include="..\assets\textures\brickwall\brickwall.jpg" />
+    <Image Include="..\assets\textures\brickwall\brickwall_normal.jpg" />
     <Image Include="..\assets\textures\Checkerboard.png" />
     <Image Include="..\assets\textures\ChernoLogo.png" />
     <Image Include="..\assets\textures\container2.png" />
@@ -198,6 +204,7 @@
     <Image Include="..\assets\textures\skybox\right.jpg" />
     <Image Include="..\assets\textures\skybox\top.jpg" />
     <Image Include="..\assets\textures\window.png" />
+    <Image Include="..\assets\textures\wood.png" />
   </ItemGroup>
   <Import Project="$(VCTargetsPath)\Microsoft.Cpp.targets" />
   <ImportGroup Label="ExtensionTargets">

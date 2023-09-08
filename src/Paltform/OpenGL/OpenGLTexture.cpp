@@ -92,6 +92,22 @@ namespace Engine {
 		}
 	}
 
+	OpenGLTexture2D::OpenGLTexture2D(uint32_t width, uint32_t height)
+		:m_width(width), m_height(height)
+	{
+		glGenTextures(1, &m_render_id);
+		glBindTexture(GL_TEXTURE_2D, m_render_id);
+		glTexImage2D(GL_TEXTURE_2D, 0, GL_DEPTH_COMPONENT, m_width, m_height, 0, GL_DEPTH_COMPONENT, GL_FLOAT, NULL);
+		glTexParameteri(GL_TEXTURE_2D, GL_TEXTURE_MIN_FILTER, GL_NEAREST);
+		glTexParameteri(GL_TEXTURE_2D, GL_TEXTURE_MAG_FILTER, GL_NEAREST);
+		glTexParameteri(GL_TEXTURE_2D, GL_TEXTURE_WRAP_S, GL_REPEAT);
+		glTexParameteri(GL_TEXTURE_2D, GL_TEXTURE_WRAP_T, GL_REPEAT);
+
+		glFramebufferTexture2D(GL_FRAMEBUFFER, GL_DEPTH_ATTACHMENT, GL_TEXTURE_2D, m_render_id, 0);
+		glDrawBuffer(GL_NONE);
+		glReadBuffer(GL_NONE);
+	}
+
 	OpenGLTexture2D::~OpenGLTexture2D()
 	{
 		glDeleteTextures(1, &m_render_id);

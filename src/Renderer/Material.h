@@ -10,7 +10,6 @@ namespace Engine {
 		Material(std::shared_ptr<Texture2D> diffuse_map = nullptr,
 			std::shared_ptr<Texture2D> m_specular_map = nullptr,
 			std::shared_ptr<Texture2D> emission_map = nullptr,
-			std::shared_ptr< Texture2D> reflect_map = nullptr,
 			float shininess = 32.0f);
 		~Material(){}
 
@@ -28,10 +27,6 @@ namespace Engine {
 		{
 			m_emission_map = texture;
 		}
-		inline void set_reflect_map(std::shared_ptr<Texture2D> texture)
-		{
-			m_reflect_map = texture;
-		}
 		inline void set_shininess(float shininess) { m_shininess = shininess; }
 		inline float get_shininess() const { return m_shininess; }
 
@@ -42,7 +37,6 @@ namespace Engine {
 		static const int s_diffuse_slot = 0;
 		static const int s_specular_slot = 1;
 		static const int s_emission_slot = 2;
-		static const int s_reflect_slot = 3;
 
 		std::shared_ptr<Texture2D> m_diffuse_map;
 		std::shared_ptr<Texture2D> m_specular_map;

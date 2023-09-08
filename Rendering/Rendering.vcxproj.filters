@@ -37,6 +37,9 @@
     <Filter Include="assets\textures\skybox">
       <UniqueIdentifier>{94ba0f8f-f4d8-4a05-b000-97299a8630ad}</UniqueIdentifier>
     </Filter>
+    <Filter Include="assets\textures\brickwall">
+      <UniqueIdentifier>{4969106d-066a-4d35-ac92-0599d93ac856}</UniqueIdentifier>
+    </Filter>
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="..\3rdparty\stb_image\stb_image.cpp">
@@ -257,6 +260,18 @@
     <None Include="..\assets\shaders\BlinnPhong.glsl">
       <Filter>assets\shaders</Filter>
     </None>
+    <None Include="..\assets\shaders\TestQuad.glsl">
+      <Filter>assets\shaders</Filter>
+    </None>
+    <None Include="..\assets\shaders\Depth.glsl">
+      <Filter>assets\shaders</Filter>
+    </None>
+    <None Include="..\assets\shaders\ShadowMapping.glsl">
+      <Filter>assets\shaders</Filter>
+    </None>
+    <None Include="..\assets\shaders\NormalMap.glsl">
+      <Filter>assets\shaders</Filter>
+    </None>
   </ItemGroup>
   <ItemGroup>
     <Image Include="..\assets\textures\Checkerboard.png">
@@ -294,6 +309,15 @@
     </Image>
     <Image Include="..\assets\textures\container2.png">
       <Filter>assets\textures</Filter>
+    </Image>
+    <Image Include="..\assets\textures\wood.png">
+      <Filter>assets\textures</Filter>
+    </Image>
+    <Image Include="..\assets\textures\brickwall\brickwall.jpg">
+      <Filter>assets\textures\brickwall</Filter>
+    </Image>
+    <Image Include="..\assets\textures\brickwall\brickwall_normal.jpg">
+      <Filter>assets\textures\brickwall</Filter>
     </Image>
   </ItemGroup>
 </Project>

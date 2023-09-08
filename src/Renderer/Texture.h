@@ -22,6 +22,7 @@ namespace Engine {
 		static std::shared_ptr<Texture2D> create(const std::string& path);
 		static std::shared_ptr<Texture2D> create_flat_color(const glm::vec4& color);
 		static std::shared_ptr<Texture2D> create_attachment(uint32_t width, uint32_t height, bool msaa, uint32_t samples = 4);
+		static std::shared_ptr<Texture2D> create_depth_map(uint32_t width, uint32_t height);
 	};
 	
 	class CubeMap

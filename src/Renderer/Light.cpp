@@ -36,6 +36,11 @@ namespace Engine {
 		std::dynamic_pointer_cast<OpenGLShader>(shader)->set_float("u_DirectionalLight.specular", m_specular_intensity);
 	}
 
+	std::shared_ptr<DirectionalLight> DirectionalLight::create(const glm::vec3& color, const glm::vec3& direction, float ambient, float diffuse, float specular)
+	{
+		return std::make_shared<DirectionalLight>(color, direction, ambient, diffuse, specular);
+	}
+
 	/////////////////////////////////////////////////////////////////////////
 
 	void PointLight::set_attenuation(float constant, float linear, float quadratic)
@@ -58,6 +63,12 @@ namespace Engine {
 		std::dynamic_pointer_cast<OpenGLShader>(shader)->set_float(string_format("u_PointLights[%d].constant", index), m_constant);
 		std::dynamic_pointer_cast<OpenGLShader>(shader)->set_float(string_format("u_PointLights[%d].linear", index), m_linear);
 		std::dynamic_pointer_cast<OpenGLShader>(shader)->set_float(string_format("u_PointLights[%d].quadratic", index), m_quadratic);
+	}
+
+	std::shared_ptr<PointLight> PointLight::create(const glm::vec3& color, const glm::vec3& position, float ambient, float diffuse, 
+		float specular, float constant, float linear, float quadratic)
+	{
+		return std::make_shared<PointLight>(color, position, ambient, diffuse, specular, constant, linear, quadratic);
 	}
 
 	/////////////////////////////////////////////////////////////////////////
@@ -93,6 +104,12 @@ namespace Engine {
 
 		std::dynamic_pointer_cast<OpenGLShader>(shader)->set_float("u_SpotLight.cutOff", m_cut_off);
 		std::dynamic_pointer_cast<OpenGLShader>(shader)->set_float("u_SpotLight.outerCutOff", m_outer_cut_off);
+	}
+
+	std::shared_ptr<SpotLight> SpotLight::create(const glm::vec3& color, const glm::vec3& position, const glm::vec3& direction, float ambient, 
+		float diffuse, float specular, float cut_off, float outer_cut_off, float constant, float linear, float quadratic)
+	{
+		return std::make_shared<SpotLight>(color, position, direction, ambient, diffuse, specular, cut_off, outer_cut_off, constant, linear, quadratic);
 	}
 
 }

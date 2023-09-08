@@ -23,6 +23,8 @@ namespace Engine {
 		void ui_render();
 		void on_event(Event& e);
 
+		void draw_depth_scene();
+		void prepare_shadow_mapping();
 	private:
 		//model
 		std::shared_ptr<Model> model;
@@ -37,27 +39,34 @@ namespace Engine {
 		glm::vec3 vegetation[5];
 		std::map<float, glm::vec3> sorted;
 		glm::vec3 position = { 0,-10,-30 };
+		glm::vec3 light_pos = { -2.0f, 4.0f, -1.0f };
 		//light pros
 		glm::vec3 direcitonal_color = { 1.0, 1.0, 1.0 };
-		glm::vec3 direction = { 1.0,0,0 };
+		glm::vec3 direction = { 0.0, 0.0, -1.0 };
 		//camera
 		CameraController m_camera_controller;
 		//fbo
 		std::shared_ptr<FrameBuffer> frame_buffer;
+		std::shared_ptr<FrameBuffer> depth_frame_buffer;
 		//skybox
 		std::shared_ptr<CubeMap> sky_box;
 		//window
 		uint32_t m_width, m_height;
 		//uniform buffer
 		std::shared_ptr<UniformBuffer> uniform_buffer;
+		//settings
+		bool use_point_light = false;
+		bool use_spot_light = true;
+
 		bool draw_outlining = false;
 		bool use_frame_buffer = false;
 		bool instance = false;
 		bool use_msaa = false;
 		bool blinn = false;
 		bool use_sky_box = false;
-		bool batch_render = false;
-
+		bool batch_render = true;
+		bool flect_box = false;
+		//instances
 		glm::mat4* modelMatrices;
 		unsigned int amount = 10000;
 	};

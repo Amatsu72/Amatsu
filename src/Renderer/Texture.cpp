@@ -50,6 +50,11 @@ namespace Engine {
 		return std::make_shared<OpenGLTexture2D>(width, height, msaa, samples);
 	}
 
+	std::shared_ptr<Texture2D> Texture2D::create_depth_map(uint32_t width, uint32_t height)
+	{
+		return std::make_shared<OpenGLTexture2D>(width, height);
+	}
+
 	///////////////////////////////////////////////////////////////////////////////////////////////////
 
 	std::shared_ptr<CubeMap> CubeMap::create(const std::string& folder_path)

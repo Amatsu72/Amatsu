@@ -14,9 +14,9 @@ namespace Engine {
 		{
 			s_renderAPI->set_viewport(x, y, width, height);
 		}
-		inline static void clear() 
+		inline static void clear(bool color, bool depth, bool stencil)
 		{ 
-			s_renderAPI->clear(); 
+			s_renderAPI->clear(color, depth, stencil);
 		}
 		inline static void set_clear_color(const glm::vec4& color) 
 		{ 
@@ -49,7 +49,7 @@ namespace Engine {
 		{
 			s_renderAPI->set_depth_test(d);
 		}
-		inline static void set_stencil_func(RenderAPI::GLFunc func, int value, unsigned int mask)
+		inline static void set_stencil_func(RenderAPI::Func func, int value, unsigned int mask)
 		{
 			s_renderAPI->set_stencil_func(func, value, mask);
 		}
@@ -57,7 +57,7 @@ namespace Engine {
 		{
 			s_renderAPI->set_stencil_mask(mask);
 		}
-		inline static void set_stencil_op(RenderAPI::GLOp sfail, RenderAPI::GLOp dfail, RenderAPI::GLOp pass)
+		inline static void set_stencil_op(RenderAPI::Op sfail, RenderAPI::Op dfail, RenderAPI::Op pass)
 		{
 			s_renderAPI->set_stencil_op(sfail, dfail, pass);
 		}
@@ -73,7 +73,7 @@ namespace Engine {
 		{
 			s_renderAPI->set_depth_mask(d);
 		}
-		inline static void set_depth_func(RenderAPI::GLFunc func)
+		inline static void set_depth_func(RenderAPI::Func func)
 		{
 			s_renderAPI->set_depth_func(func);
 		}

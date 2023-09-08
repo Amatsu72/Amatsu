@@ -121,13 +121,12 @@ namespace Engine {
 		m_textures.push_back(texture);
 	}
 
-	void OpenGLFrameBuffer::texture_bind()
+	void OpenGLFrameBuffer::texture_bind(uint32_t index)
 	{
 		for (int i = 0; i < m_textures.size(); i++)
-			m_textures[i]->bind(i);
+			m_textures[i]->bind(i + index);
 	}
 	
-
 	////////////////////////////////////////////////////////////////////////////////////////////////////////
 
 	OpenGLUniformBuffer::OpenGLUniformBuffer(const BufferLayout& layout, uint32_t index)

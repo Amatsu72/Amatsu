@@ -18,7 +18,7 @@ namespace Engine{
 		inline void set_diffuse_intensity(float diffuse) { m_ambient_intensity = diffuse; }
 		inline void set_specular_intensity(float specular) { m_ambient_intensity = specular; }
 		inline void set_color(const glm::vec3& color) { m_color = color; }
-		void set_intensity(float ambient, float diffuse, float specular);
+		void set_intensity(float ambient, float diffuse, float specular);			
 
 	protected:
 		Light(const glm::vec3& color, float ambient, float diffuse, float specular)
@@ -41,6 +41,7 @@ namespace Engine{
 
 		void bind(std::shared_ptr<Shader>& shader);
 
+		static std::shared_ptr<DirectionalLight> create(const glm::vec3& color, const glm::vec3& direction, float ambient, float diffuse, float specular);
 	private:
 		glm::vec3 m_direction;
 	};
@@ -65,6 +66,9 @@ namespace Engine{
 		void set_attenuation(float constant, float linear, float quadratic);
 
 		void bind(std::shared_ptr<Shader>& shader, int index = 0);
+
+		static std::shared_ptr<PointLight> create(const glm::vec3& color, const glm::vec3& position, float ambient, float diffuse, float specular,
+			float constant = 1.0f, float linear = 0.09f, float quadratic = 0.032f);
 	private:
 		glm::vec3 m_position;
 
@@ -103,6 +107,8 @@ namespace Engine{
 
 		void bind(std::shared_ptr<Shader>& shader);
 
+		static std::shared_ptr<SpotLight> create(const glm::vec3& color, const glm::vec3& position, const glm::vec3& direction, float ambient, float diffuse,
+			float specular, float cut_off, float outer_cut_off, float constant = 1.0f, float linear = 0.09f, float quadratic = 0.032f);
 	private:
 		glm::vec3 m_position;
 		glm::vec3 m_direction;

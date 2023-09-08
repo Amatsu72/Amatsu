@@ -22,8 +22,8 @@ namespace Engine {
 
 		s_data->vertex_buffer_base = new Vertex[s_data->MaxVertices];
 
-		s_data->batch_shader = Shader::create("../../../../assets/shaders/Box.glsl");
-		s_data->batch_texture = Texture2D::create("../../../../assets/textures/container2.png");
+		s_data->batch_shader = ShaderLibrary::load("../../../../assets/shaders/Box.glsl");
+		s_data->batch_texture = TextureLibrary::load("../../../../assets/textures/container2.png");
 	}
 
 	void Renderer::on_window_resize(uint32_t width, uint32_t height)
@@ -45,33 +45,24 @@ namespace Engine {
 		for (auto& [name, shader] : ShaderLibrary::get_all_shaders())
 		{
 			shader->bind();
-			shader->set_float3("u_ViewPosition", camera.get_position());
+			std::dynamic_pointer_cast<OpenGLShader>(shader)->set_float3("u_ViewPosition", camera.get_position());
+			std::dynamic_pointer_cast<OpenGLShader>(shader)->set_int("u_PointLightCount", point_lights.size());
+
 			if (directional_light)
 				directional_light->bind(shader);
-
-			shader->set_int("u_PointLightCount", point_lights.size());
-
+		
 			for (int i = 0; i < point_lights.size(); ++i)
 			{
 				point_lights[i]->bind(shader, i);
 			}
+			
 			if (spot_light)
 				spot_light->bind(shader);
 		}
 	}
 
 	void Renderer::end_scene()
-	{
-		uint32_t data_size = (uint8_t*)s_data->vertex_buffer_ptr - (uint8_t*)s_data->vertex_buffer_base;
-		if(data_size)
-		{
-			s_data->batch_vertex_buffer->set_data(s_data->vertex_buffer_base, data_size);
-			s_data->batch_shader->bind();
-			std::dynamic_pointer_cast<OpenGLShader>(s_data->batch_shader)->set_mat4("u_Transform", glm::mat4(1.0f));
-			s_data->batch_vertex_array->bind();
-			s_data->batch_texture->bind();
-			RenderCommand::draw(s_data->batch_vertex_array, s_data->batch_vertex_array->get_vertex_count());
-		}
+	{	
 	}
 
 	void Renderer::submit(const std::shared_ptr<Shader>& shader, const std::shared_ptr<VertexArray>& vertex_array, const glm::mat4& transform, bool cull_face)
@@ -292,6 +283,17 @@ namespace Engine {
 			s_data->vertex_buffer_ptr->Normal = { 0.0f,  1.0f, 0.0f };
 			s_data->vertex_buffer_ptr->TexCoord = { 0.0f, 0.0f };
 			s_data->vertex_buffer_ptr++;
+		}
+
+		uint32_t data_size = (uint8_t*)s_data->vertex_buffer_ptr - (uint8_t*)s_data->vertex_buffer_base;
+		if (data_size)
+		{
+			s_data->batch_vertex_buffer->set_data(s_data->vertex_buffer_base, data_size);
+			s_data->batch_shader->bind();
+			std::dynamic_pointer_cast<OpenGLShader>(s_data->batch_shader)->set_mat4("u_Transform", glm::mat4(1.0f));
+			s_data->batch_vertex_array->bind();
+			s_data->batch_texture->bind();
+			RenderCommand::draw(s_data->batch_vertex_array, s_data->batch_vertex_array->get_vertex_count());
 		}
 	}
 	

@@ -10,7 +10,7 @@ namespace Engine {
 		void init() override;
 		void set_viewport(uint32_t x, uint32_t y, uint32_t width, uint32_t height) override;
 
-		void clear() override;
+		void clear(bool color, bool depth, bool stencil) override;
 		void set_clear_color(const glm::vec4& color) override;
 		
 		void draw_indexed(const std::shared_ptr<VertexArray>& vertex_array, bool cull_face = false) override;
@@ -20,19 +20,16 @@ namespace Engine {
 	
 		void set_depth_test(bool d) override;
 		void set_depth_mask(bool d) override;
-		void set_depth_func(GLFunc func) override;
+		void set_depth_func(Func func) override;
 		
 		void set_stencil_test(bool s) override;
-		void set_stencil_func(GLFunc func, int value, unsigned int mask) override;
+		void set_stencil_func(Func func, int value, unsigned int mask) override;
 		void set_stencil_mask(unsigned int mask) override;
-		void set_stencil_op(GLOp sfail, GLOp dfail, GLOp pass) override;
+		void set_stencil_op(Op sfail, Op dfail, Op pass) override;
 
 		void set_cull_face(bool c) override;
 		void set_line_mode() override;
-	private:
-		bool m_stencil_test = false;
-		bool m_depth_test = true;
-		bool m_cull_face = false;
+
 	};
 
 }

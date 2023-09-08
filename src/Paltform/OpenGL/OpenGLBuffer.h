@@ -54,7 +54,7 @@ namespace Engine {
 		void unbind() const override;
 		void blit() override;
 		void attach(const std::shared_ptr<Texture2D>& texture) override;
-		void texture_bind() override;
+		void texture_bind(uint32_t index = 0) override;
 	private:
 		uint32_t m_render_id;
 		uint32_t m_width, m_height;

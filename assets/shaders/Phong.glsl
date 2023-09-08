@@ -11,25 +11,30 @@ layout(std140, binding = 0) uniform Matrices
     mat4 u_Projection;
 	mat4 u_View;
 };
-out vec2 v_TexCoord;
-out vec3 v_Normal;
-out vec3 v_FragPos;
+
+out VS_OUT {
+	vec2 TexCoord;
+	vec3 Normal;
+	vec3 FragPos;
+} v_out;
 
 void main()
 {
-	v_TexCoord = a_TexCoord;
+	v_out.TexCoord = a_TexCoord;
 	gl_Position = u_Projection * u_View * u_Transform * vec4(a_Position, 1.0);
-	v_Normal = mat3(transpose(inverse(u_Transform))) * a_Normal; 
-	v_FragPos = vec3(u_Transform * vec4(a_Position, 1.0));
+	v_out.Normal = mat3(transpose(inverse(u_Transform))) * a_Normal; 
+	v_out.FragPos = vec3(u_Transform * vec4(a_Position, 1.0));
 }
 
 #type fragment
 #version 460 core
 out vec4 color;	
 
-in vec2 v_TexCoord;
-in vec3 v_Normal;
-in vec3 v_FragPos;
+in VS_OUT {
+	vec2 TexCoord;
+	vec3 Normal;
+	vec3 FragPos;
+} v_in;
 
 struct DirectionalLight {
 	vec3 direction;
@@ -94,10 +99,10 @@ vec3 CalPointLight(PointLight light);
 vec3 CalSpotLight(SpotLight light);
 //vec3 CalReflect();
 
-vec3 normal = normalize(v_Normal);
-vec3 viewDir = normalize(u_ViewPosition - v_FragPos);
-vec3 diffuseColor = vec3(texture(u_Material.diffuse, v_TexCoord));
-vec3 reflectColor = vec3(texture(u_Material.specular, v_TexCoord));
+vec3 normal = normalize(v_in.Normal);
+vec3 viewDir = normalize(u_ViewPosition - v_in.FragPos);
+vec3 diffuseColor = vec3(texture(u_Material.diffuse, v_in.TexCoord));
+vec3 reflectColor = vec3(texture(u_Material.specular, v_in.TexCoord));
 
 void main()
 {
@@ -107,12 +112,13 @@ void main()
 	{
 		pointColor += CalPointLight(u_PointLights[i]);
 	}
-	vec3 spotLight = CalSpotLight(u_SpotLight);
-	vec3 emission = vec3(texture(u_Material.emission, v_TexCoord));
-	//vec3 reflect = CalReflect();
+	pointColor = clamp(pointColor, 0.0, 1.0);
+	vec3 spotColor = clamp(CalSpotLight(u_SpotLight), 0.0, 1.0);
+	vec3 emission = vec3(texture(u_Material.emission, v_in.TexCoord));
 
-	vec3 result = dirColor + pointColor + spotLight + emission;
+	vec3 result = dirColor + pointColor + spotColor + emission;
 	color = vec4(result, 1.0);
+
 	//color = vec4(vec3(gl_FragCoord.z), 1.0);
 }
 
@@ -137,11 +143,11 @@ vec3 CalDirLight(DirectionalLight light)
 
 vec3 CalPointLight(PointLight light)
 {
-	vec3 lightDir = normalize(light.position - v_FragPos);
+	vec3 lightDir = normalize(light.position - v_in.FragPos);
 
-	float dist = length(light.position - v_FragPos);
+	float dist = length(light.position - v_in.FragPos);
 	float attenuation = 1.0 / (
-		light.constant + light.linear * dist +  light.quadratic * (dist * dist)
+		light.constant + light.linear * dist + light.quadratic * (dist * dist)
 	);
 
 	// ambient
@@ -161,11 +167,11 @@ vec3 CalPointLight(PointLight light)
 
 vec3 CalSpotLight(SpotLight light)
 {
-	vec3 lightDir = normalize(light.position - v_FragPos);
+	vec3 lightDir = normalize(light.position - v_in.FragPos);
 
-	float dist= length(light.position - v_FragPos);
+	float dist= length(light.position - v_in.FragPos);
 	float attenuation = 1.0 / (
-		light.constant + light.linear * dist +  light.quadratic * (dist * dist)
+		light.constant + light.linear * dist + light.quadratic * (dist * dist)
 	);
 
 	float theta = dot(lightDir, normalize(-light.direction));
@@ -189,8 +195,8 @@ vec3 CalSpotLight(SpotLight light)
 
 //vec3 CalReflect()
 //{
-//	vec3 I = normalize(v_FragPos - u_ViewPosition);
-//    vec3 R = reflect(I, normalize(v_Normal));
+//	vec3 I = normalize(v_in.FragPos - u_ViewPosition);
+//    vec3 R = reflect(I, normalize(v_in.Normal));
 //	vec3 result = vec3(texture(u_Material.reflect, v_TexCoord)) + texture(u_Skybox,R).rgb;
 //	return result;
 //}

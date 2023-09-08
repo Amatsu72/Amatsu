@@ -9,9 +9,9 @@
 
 namespace Engine {
 
-	Scene::Scene() :m_camera_controller(16.0f / 9.0f, 0.1f, 100.0f)
+	Scene::Scene() :m_camera_controller(16.0f / 9.0f, 0.1f, 100.0f), m_width(1280), m_height(720)
 	{
-		//to prepare rendering data
+		//floor vao
 		float planeVertices[] = {
 			-20.5f, -10.1f, -50.5f,  0.0f, 0.0f,
 			 20.5f, -10.1f, -50.5f,  2.0f, 0.0f,
@@ -21,31 +21,27 @@ namespace Engine {
 			-20.5f, -10.1f, -50.5f,  0.0f, 0.0f
 		};
 		auto floor_vertex_array = VertexArrayLibrary::load("floor");
-		//floor_vertex_array = VertexArray::create();
 		std::shared_ptr<VertexBuffer> vertex_buffer = VertexBuffer::create(planeVertices, sizeof(planeVertices));
-		
 		vertex_buffer->set_layout({
 			{ShaderDataType::Float3, "a_Position"},
 			{ShaderDataType::Float2, "a_TexCoord"}
 			});
 		floor_vertex_array->add_vertex_buffer(vertex_buffer);
 		
-		//unsigned int indices[] = {
-		//	0, 1, 2,
-		//	2, 3, 0
-		//};
-		//std::shared_ptr<IndexBuffer> index_buffer = IndexBuffer::create(indices, sizeof(indices) / sizeof(uint32_t));
-		//m_vertex_array->set_index_buffer(index_buffer);
-		// 
+		point_light_positions[0] = glm::vec3(0.7f, 0.2f, 2.0f);
+		point_light_positions[1] = glm::vec3(2.3f, -3.3f, -4.0f);
+		point_light_positions[2] = glm::vec3(-4.0f, 2.0f, -12.0f);
+		point_light_positions[3] = glm::vec3(0.0f, 0.0f, -3.0f);
+
 		//directional light
-		directional_light = std::make_shared<DirectionalLight>(direcitonal_color, glm::vec3(1.0, 0, 0), 0.1, 0.7, 1.0);
+		directional_light = DirectionalLight::create(direcitonal_color, glm::vec3(1.0f, 0, 0), 0.1f, 0.7f, 1.0f);
 		for (int i = 0; i < 4; ++i)
-			point_lights.push_back(std::make_shared<PointLight>(glm::vec3(1.0), point_light_positions[i], 0.1, 0.5, 1.0));
+			point_lights.push_back(PointLight::create(glm::vec3(1.0f), point_light_positions[i], 0.1f, 0.5f, 1.0f));
 		//spot light
-		spot_light = std::make_shared<SpotLight>(glm::vec3(1.0),
+		spot_light = SpotLight::create(glm::vec3(1.0),
 			m_camera_controller.get_camera().get_position(),
 			m_camera_controller.get_camera().get_front(),
-			0.1, 0.5, 1.0, glm::cos(glm::radians(12.5f)),
+			0.1f, 0.5f, 1.0f, glm::cos(glm::radians(12.5f)),
 			glm::cos(glm::radians(12.5f + 5.0f)));
 		//point light
 		float light_vertices[] = {
@@ -97,11 +93,6 @@ namespace Engine {
 			{ShaderDataType::Float3, "a_Position"}
 			});
 		point_vertex_array->add_vertex_buffer(point_vertex_buffer);
-
-		point_light_positions[0] = glm::vec3(0.7f, 0.2f, 2.0f);
-		point_light_positions[1] = glm::vec3(2.3f, -3.3f, -4.0f);
-		point_light_positions[2] = glm::vec3(-4.0f, 2.0f, -12.0f);
-		point_light_positions[3] = glm::vec3(0.0f, 0.0f, -3.0f);
 
 		//cube
 		float cube_vertices[] = {
@@ -196,37 +187,40 @@ namespace Engine {
 		auto light_shader = ShaderLibrary::load("../../../../assets/shaders/Light.glsl");
 		auto outlining_shader = ShaderLibrary::load("../../../../assets/shaders/Outlining.glsl");
 		auto cube_shader = ShaderLibrary::load("../../../../assets/shaders/Reflect.glsl");
+		auto wall_shader = ShaderLibrary::load("../../../../assets/shaders/NormalMap.glsl");
 
 		std::dynamic_pointer_cast<OpenGLShader>(light_shader)->bind();
 		std::dynamic_pointer_cast<OpenGLShader>(light_shader)->set_float4("u_color", glm::vec4(1.0f));
-		std::dynamic_pointer_cast<OpenGLShader>(light_shader)->set_int("u_PointLightCount", 4);
-
 		std::dynamic_pointer_cast<OpenGLShader>(floor_shader)->bind();
 		std::dynamic_pointer_cast<OpenGLShader>(floor_shader)->set_int("u_Texture", 0);
-
 		std::dynamic_pointer_cast<OpenGLShader>(cube_shader)->bind();
 		std::dynamic_pointer_cast<OpenGLShader>(cube_shader)->set_int("u_Skybox", 0);
+		std::dynamic_pointer_cast<OpenGLShader>(wall_shader)->bind();
+		std::dynamic_pointer_cast<OpenGLShader>(wall_shader)->set_int("u_DiffuseMap", 0);
+		std::dynamic_pointer_cast<OpenGLShader>(wall_shader)->set_int("u_NormalMap", 1);
 		//textures
 		TextureLibrary::load("../../../../assets/textures/marble.jpg");
 		TextureLibrary::load("../../../../assets/textures/grass.png");
 		TextureLibrary::load("../../../../assets/textures/window.png");
+		TextureLibrary::load("../../../../assets/textures/brickwall/brickwall.jpg");
 		//model
 		model = Model::create("../../../../assets/models/nanosuit/nanosuit.obj");
 		planet = Model::create("../../../../assets/models/planet/planet.obj");
 		rock = Model::create("../../../../assets/models/rock/rock.obj");
 		//draw_outlining
 		RenderCommand::set_stencil_test(true);
-		RenderCommand::set_stencil_func(RenderAPI::GLFunc::NOTEQUAL, 1, 0xFF);
-		RenderCommand::set_stencil_op(RenderAPI::GLOp::KEEP, RenderAPI::GLOp::KEEP, RenderAPI::GLOp::REPLACE);
+		RenderCommand::set_stencil_func(RenderAPI::Func::NOTEQUAL, 1, 0xFF);
+		RenderCommand::set_stencil_op(RenderAPI::Op::KEEP, RenderAPI::Op::KEEP, RenderAPI::Op::REPLACE);
 
 		//frame buffer
-		frame_buffer = FrameBuffer::create(1280, 720);
-		auto texture_attachment = Texture2D::create_attachment(1280, 720, use_msaa);
+		frame_buffer = FrameBuffer::create(m_width, m_height);
+		auto texture_attachment = Texture2D::create_attachment(m_width, m_height, use_msaa);
 		frame_buffer->attach(texture_attachment);
-		auto render_buffer = RenderBuffer::create(1280, 720, use_msaa);
+		auto render_buffer = RenderBuffer::create(m_width, m_height, use_msaa);
 		render_buffer->attach_frame_buffer();
 		frame_buffer->check();
-		
+
+		//quad
 		float quadVertices[] = { 
 			-1.0f,  1.0f,  0.0f, 1.0f,
 			-1.0f, -1.0f,  0.0f, 0.0f,
@@ -337,63 +331,71 @@ namespace Engine {
 			// 4. now add to list of matrices
 			modelMatrices[i] = model;
 		}
-
 		std::shared_ptr<VertexBuffer> instance_buffer = VertexBuffer::create(modelMatrices, amount * sizeof(glm::mat4));
 		instance_buffer->set_layout({ {{ShaderDataType::Mat4, "instanceMatrix"}} });
 		rock->add_instance_buffer(instance_buffer);
-
+		//uniform buffer
 		uniform_buffer = UniformBuffer::create({ {ShaderDataType::Mat4, "u_View"},{ShaderDataType::Mat4, "u_Projection"} }, 0);
 		uniform_buffer->set_mat4(m_camera_controller.get_projection(), 0);
+			
+		//shadow mapping
+		prepare_shadow_mapping();
 	}
 
 	void Scene::on_update(Timestep ts)
 	{
 		m_camera_controller.update(ts);
 		
-		if(use_frame_buffer)
+		if (use_frame_buffer)
 		{
 			frame_buffer->bind();
-			RenderCommand::set_stencil_test(false);
+			RenderCommand::set_depth_test(true);
+			RenderCommand::set_clear_color(glm::vec4(0.1f, 0.1f, 0.1f, 1.0f));
+			RenderCommand::clear(true, true, false);
 		}
-		
-		RenderCommand::set_clear_color(glm::vec4(0.1f, 0.1f, 0.1f, 1.0f));
-		RenderCommand::clear();
-		
+		else
+		{
+			RenderCommand::set_clear_color(glm::vec4(0.1f, 0.1f, 0.1f, 1.0f));
+			RenderCommand::clear(true, true, true);
+		}
+
+		//uniform buffer object
+		uniform_buffer->set_mat4(m_camera_controller.get_camera().get_view_matrix(), sizeof(glm::mat4));
+	
 		Renderer::begin_scene(m_camera_controller.get_camera(), directional_light, point_lights, spot_light);
 		//light setting
 		directional_light->set_color(direcitonal_color);
 		directional_light->set_direction(direction);
-		spot_light->set_position(m_camera_controller.get_camera().get_position());
-		spot_light->set_direction(m_camera_controller.get_camera().get_front());
-		//uniform buffer object
-		uniform_buffer->set_mat4(m_camera_controller.get_camera().get_view_matrix(), sizeof(glm::mat4));
+		
+		if(use_spot_light)
+		{
+			spot_light->set_position(m_camera_controller.get_camera().get_position());
+			spot_light->set_direction(m_camera_controller.get_camera().get_front());
+		}
+			
+		if (draw_outlining)//dont't write the floor to the stencil buffer
+			RenderCommand::set_stencil_mask(0x00);
 
 		//draw floor
 		auto shader = ShaderLibrary::get("Texture");
 		auto texture = TextureLibrary::get("marble");
 		texture->bind();
 		auto floor_va = VertexArrayLibrary::get("floor");
-		if (draw_outlining)//dont't write the floor to the stencil buffer
-			RenderCommand::set_stencil_mask(0x00);
-
 		Renderer::submit(shader, floor_va, glm::scale(glm::mat4(1.0f), glm::vec3(2.0f, 1.0f, 2.0f)));
-		
-		//draw point light
-		auto light_shader = ShaderLibrary::get("Light");
-		auto point_va = VertexArrayLibrary::get("point");
-		for (int i = 0; i < 4; ++i)
-		{
-			Renderer::submit(light_shader, point_va, glm::translate(glm::mat4(1.0f), point_light_positions[i]));
-		}
-		//draw reflect box
-		auto cube_shader = ShaderLibrary::get("Reflect");
-		auto cube_va = VertexArrayLibrary::get("cube");
-		Renderer::submit(cube_shader, cube_va);
-		std::dynamic_pointer_cast<OpenGLShader>(cube_shader)->set_float3("u_CameraPosition", m_camera_controller.get_camera().get_position());
-		
+		//wall
+		//glm::mat4 wall_trans = glm::translate(glm::mat4(1.0f), glm::vec3(0, -30, -40));
+		//wall_trans = glm::rotate(wall_trans, glm::radians(90.0f), glm::normalize(glm::vec3(1.0, 0.0, 0.0)));
+		//auto wall_shader = ShaderLibrary::get("NormalMap");
+		//std::dynamic_pointer_cast<OpenGLShader>(wall_shader)->bind();
+		//std::dynamic_pointer_cast<OpenGLShader>(wall_shader)->set_float3("u_lightPos", light_pos);
+
+		//auto wall = TextureLibrary::get("brickwall");
+		//wall->bind();
+		//
+		//Renderer::submit(shader, floor_va, wall_trans);
 		if (draw_outlining)
 		{
-			RenderCommand::set_stencil_func(RenderAPI::GLFunc::ALWAYS, 1, 0xFF);
+			RenderCommand::set_stencil_func(RenderAPI::Func::ALWAYS, 1, 0xFF);
 			RenderCommand::set_stencil_mask(0xFF);
 		}
 		//draw model
@@ -406,26 +408,45 @@ namespace Engine {
 			
 		glm::mat4 trans = glm::translate(glm::mat4(1.0f), position);
 		Renderer::submit(*model, model_shader, trans, true);
-		Renderer::submit(*planet, model_shader, glm::translate(glm::mat4(1.0), glm::vec3(10, 0, -40)));
+		Renderer::submit(*planet, model_shader, glm::translate(glm::mat4(1.0), glm::vec3(10, 0, -30)));
+
+		if (draw_outlining) //draw outlining
+		{
+			RenderCommand::set_stencil_func(RenderAPI::Func::NOTEQUAL, 1, 0xFF);
+			RenderCommand::set_stencil_mask(0x00);
+			RenderCommand::set_depth_test(false);
+			auto outlining_shader = ShaderLibrary::get("Outlining");
+			Renderer::submit(*model, outlining_shader, glm::scale(trans, glm::vec3(1.03f, 1.03f, 1.03f)));
+		}
+		RenderCommand::set_stencil_mask(0xFF);
+		RenderCommand::set_stencil_func(RenderAPI::Func::ALWAYS, 0, 0xFF);
+		RenderCommand::set_depth_test(true);		
+
 		//instance 
-		if(instance)
+		if (instance)
 		{
 			auto instance_shader = ShaderLibrary::get("instance");
 			Renderer::submit_instance(*rock, instance_shader, amount, false);
 		}
-
-		if (draw_outlining) //draw outlining
+		//draw point light
+		if(use_point_light)
 		{
-			RenderCommand::set_stencil_func(RenderAPI::GLFunc::NOTEQUAL, 1, 0xFF);
-			RenderCommand::set_stencil_mask(0x00);
-			RenderCommand::set_depth_test(false);
-			auto outlining_shader = ShaderLibrary::get("Outlining");
-			Renderer::submit(*model, outlining_shader, glm::scale(trans, glm::vec3(1.01f, 1.01f, 1.01f)));	
+			auto light_shader = ShaderLibrary::get("Light");
+			auto point_va = VertexArrayLibrary::get("point");
+			for (int i = 0; i < 4; ++i)
+			{
+				Renderer::submit(light_shader, point_va, glm::translate(glm::mat4(1.0f), point_light_positions[i]));
+			}
+		}
+		//draw reflect box
+		if(flect_box)
+		{
+			auto cube_shader = ShaderLibrary::get("Reflect");
+			auto cube_va = VertexArrayLibrary::get("cube");
+			Renderer::submit(cube_shader, cube_va);
+			std::dynamic_pointer_cast<OpenGLShader>(cube_shader)->set_float3("u_CameraPosition", m_camera_controller.get_camera().get_position());
 		}
 
-		RenderCommand::set_stencil_mask(0xFF);
-		RenderCommand::set_stencil_func(RenderAPI::GLFunc::ALWAYS, 0, 0xFF);
-		RenderCommand::set_depth_test(true);
 		//draw grass
 		auto grass_texture = TextureLibrary::get("grass");
 		auto grass_va = VertexArrayLibrary::get("grass");
@@ -439,43 +460,11 @@ namespace Engine {
 		window_texture->bind();
 		for (std::map<float, glm::vec3>::reverse_iterator it = sorted.rbegin(); it != sorted.rend(); ++it)
 			Renderer::submit(shader, window_va, glm::translate(glm::mat4(1.0f), it->second));
-	
 
-		if (use_frame_buffer)
-		{
-			frame_buffer->blit();
-			auto quad_va = VertexArrayLibrary::get("quad");
-			frame_buffer->unbind();
-			if (!use_msaa)
-			{
-				RenderCommand::set_depth_test(false);
-				RenderCommand::set_clear_color(glm::vec4(1.0f));
-				RenderCommand::clear();
-				frame_buffer->texture_bind();
-				auto screen_shader = ShaderLibrary::get("FrameBuffer");
-				//RenderCommand::set_line_mode();  
-				Renderer::submit(screen_shader, quad_va);
-			}
-		}
-		//skybox
-		if(use_sky_box)
-		{
-			auto cube_map_shader = ShaderLibrary::get("CubeMap");
-			auto sky_va = VertexArrayLibrary::get("sky_box");
-			sky_box->bind();
-			RenderCommand::set_depth_func(RenderAPI::GLFunc::LEQUAL);
-			RenderCommand::set_depth_mask(false);
-			Renderer::submit(cube_map_shader, sky_va, glm::translate(glm::mat4(1.0f), m_camera_controller.get_camera().get_position()));
-			RenderCommand::set_depth_func(RenderAPI::GLFunc::LESS);
-			RenderCommand::set_depth_mask(true);
-		}
-		
-		
 		//batch render
-		if(batch_render)
+		if (batch_render)
 		{
 			std::vector<glm::vec3> box_position;
-
 			box_position.push_back(glm::vec3(2.0f, 5.0f, -15.0f));
 			box_position.push_back(glm::vec3(-1.5f, -2.2f, -2.5f));
 			box_position.push_back(glm::vec3(-3.8f, -2.0f, -12.3f));
@@ -485,11 +474,43 @@ namespace Engine {
 			box_position.push_back(glm::vec3(1.5f, 2.0f, -2.5f));
 			box_position.push_back(glm::vec3(1.5f, 0.2f, -1.5f));
 			box_position.push_back(glm::vec3(-1.3f, 1.0f, -1.5f));
-
 			Renderer::submit_batch(box_position);
 		}
 
-		Renderer::end_scene();
+		//skybox
+		if (use_sky_box)
+		{
+			auto cube_map_shader = ShaderLibrary::get("CubeMap");
+			auto sky_va = VertexArrayLibrary::get("sky_box");
+			sky_box->bind();
+			RenderCommand::set_depth_func(RenderAPI::Func::LEQUAL);
+			RenderCommand::set_depth_mask(false);
+			Renderer::submit(cube_map_shader, sky_va, glm::translate(glm::mat4(1.0f), m_camera_controller.get_camera().get_position()));
+			RenderCommand::set_depth_func(RenderAPI::Func::LESS);
+			RenderCommand::set_depth_mask(true);
+		}
+
+		//frame_buffer
+		if (use_frame_buffer)
+		{
+			frame_buffer->blit();
+			
+			if (!use_msaa)
+			{
+				auto quad_va = VertexArrayLibrary::get("quad");
+				frame_buffer->unbind();
+				RenderCommand::set_depth_test(false);
+				RenderCommand::set_clear_color(glm::vec4(1.0f));
+				RenderCommand::clear(true, false, false);
+				frame_buffer->texture_bind();
+				auto screen_shader = ShaderLibrary::get("FrameBuffer");
+				//RenderCommand::set_line_mode();  
+				Renderer::submit(screen_shader, quad_va);
+			}
+		}
+
+		//draw_depth_scene();
+		Renderer::end_scene();	
 	}
 
 	void Scene::ui_render()
@@ -508,9 +529,10 @@ namespace Engine {
 		ImGui::Checkbox("instance", &instance);
 		ImGui::Checkbox("MSAA", &use_msaa);
 		ImGui::Checkbox("BlinnPhong", &blinn);
+		ImGui::DragFloat3("light pos", glm::value_ptr(light_pos));
 		ImGui::End();
-		
 	}
+
 	void Scene::on_event(Event& event)
 	{
 		
@@ -520,14 +542,15 @@ namespace Engine {
 			if (e.get_key_code() == KeyCode::R)
 			{
 				frame_buffer = FrameBuffer::create(m_width, m_height);
+				//frame_buffer->set_width_height(m_width, m_height);
 				auto texture_attachment = Texture2D::create_attachment(m_width, m_height, use_msaa);
 				frame_buffer->attach(texture_attachment);
 				auto render_buffer = RenderBuffer::create(m_width, m_height, use_msaa);
 				render_buffer->attach_frame_buffer();
 				frame_buffer->check();
+				frame_buffer->unbind();
 			}
-		}
-		
+		}		
 		if (event.get_event_type() == EventType::WindowResize)
 		{
 			m_width = dynamic_cast<WindowResizeEvent&>(event).get_width();
@@ -535,5 +558,184 @@ namespace Engine {
 		}
 		m_camera_controller.on_event(event);
 		
+	}
+
+	void Scene::draw_depth_scene()
+	{
+		RenderCommand::set_clear_color(glm::vec4(0.1f, 0.1f, 0.1f, 1.0f));
+		//RenderCommand::clear(true, true, false);
+
+		//render depth map
+		float near_plane = 1.0f, far_plane = 7.5;
+
+		glm::mat4 projection = glm::ortho(-10.0f, 10.0f, -10.0f, 10.0f, near_plane, far_plane);
+		glm::mat4 view = glm::lookAt(light_pos, glm::vec3(0.0f), glm::vec3(0.0, 1.0, 0.0));
+		auto depth_shader = ShaderLibrary::get("Depth");
+		std::dynamic_pointer_cast<OpenGLShader>(depth_shader)->set_mat4("u_Projection", projection);
+		std::dynamic_pointer_cast<OpenGLShader>(depth_shader)->set_mat4("u_View", view);	
+		RenderCommand::set_viewport(0, 0, m_width, m_height);
+		depth_frame_buffer->bind();
+		RenderCommand::clear(false, true, false);
+		auto wood_texture = TextureLibrary::get("wood");
+		wood_texture->bind();
+
+		auto floor_va = VertexArrayLibrary::get("plane");
+		Renderer::submit(depth_shader, floor_va, glm::mat4(1.0f));
+
+		auto va = VertexArrayLibrary::get("xxx");
+		glm::mat4 model = glm::mat4(1.0f);
+		model = glm::translate(model, glm::vec3(0.0f, 1.5f, 0.0));
+		model = glm::scale(model, glm::vec3(0.5f));
+		Renderer::submit(depth_shader, va, model);
+		model = glm::mat4(1.0f);
+		model = glm::translate(model, glm::vec3(2.0f, 0.0f, 1.0));
+		model = glm::scale(model, glm::vec3(0.5f));
+		Renderer::submit(depth_shader, va, model);
+		model = glm::mat4(1.0f);
+		model = glm::translate(model, glm::vec3(-1.0f, 0.0f, 2.0));
+		model = glm::rotate(model, glm::radians(60.0f), glm::normalize(glm::vec3(1.0, 0.0, 1.0)));
+		model = glm::scale(model, glm::vec3(0.25));
+		Renderer::submit(depth_shader, va, model);
+		//depth_frame_buffer->unbind();
+		
+		RenderCommand::set_viewport(0, 0, m_width, m_height);
+		RenderCommand::clear(true, true, false);
+
+		////render scene
+		//auto shadow_map_shader = ShaderLibrary::get("ShadowMapping");
+		//std::dynamic_pointer_cast<OpenGLShader>(shadow_map_shader)->set_mat4("u_Projection", projection);
+		//std::dynamic_pointer_cast<OpenGLShader>(shadow_map_shader)->set_mat4("u_View", view);
+		//std::dynamic_pointer_cast<OpenGLShader>(shadow_map_shader)->set_mat4("u_LightSpace", projection * view);
+		//std::dynamic_pointer_cast<OpenGLShader>(shadow_map_shader)->set_float3("u_ViewPosition", m_camera_controller.get_camera().get_position());
+		//std::dynamic_pointer_cast<OpenGLShader>(shadow_map_shader)->set_float3("u_LightPos", light_pos);
+		//box_texture->bind(0);
+		//depth_frame_buffer->texture_bind(1);
+		//
+		//Renderer::submit(shadow_map_shader, floor_va, glm::scale(glm::mat4(1.0f), glm::vec3(2.0f, 1.0f, 2.0f)));
+		//Renderer::submit(shadow_map_shader, va, glm::translate(glm::mat4(1.0), point_light_positions[0]));
+		//Renderer::submit(shadow_map_shader, va, glm::translate(glm::mat4(1.0), point_light_positions[1]));
+		//Renderer::submit(shadow_map_shader, va, glm::translate(glm::mat4(1.0), point_light_positions[2]));
+		//Renderer::submit(shadow_map_shader, va, glm::translate(glm::mat4(1.0), point_light_positions[3]));
+		
+		//use depth map	
+		auto quad_va = VertexArrayLibrary::get("yyy");		
+		auto test_quad_shader = ShaderLibrary::get("TestQuad");
+		test_quad_shader->bind();
+		test_quad_shader->set_float("u_near", near_plane);
+		test_quad_shader->set_float("u_far", far_plane);
+		depth_frame_buffer->texture_bind();
+		Renderer::submit(test_quad_shader, quad_va);
+	}
+
+	void Scene::prepare_shadow_mapping()
+	{
+		//load shader
+		auto test_quad = ShaderLibrary::load("../../../../assets/shaders/TestQuad.glsl");
+		std::dynamic_pointer_cast<OpenGLShader>(test_quad)->bind();
+		std::dynamic_pointer_cast<OpenGLShader>(test_quad)->set_int("u_DepthMap", 0);
+
+		ShaderLibrary::load("../../../../assets/shaders/Depth.glsl");
+
+		auto shadow_map_shader = ShaderLibrary::load("../../../../assets/shaders/ShadowMapping.glsl");
+		std::dynamic_pointer_cast<OpenGLShader>(shadow_map_shader)->bind();
+		std::dynamic_pointer_cast<OpenGLShader>(shadow_map_shader)->set_int("u_Texture", 0);
+		std::dynamic_pointer_cast<OpenGLShader>(shadow_map_shader)->set_int("u_ShadowMap", 1);
+		
+		//floor
+		float planeVertices[] = {
+			// positions            // normals         // texcoords
+			 25.0f, -0.5f,  25.0f,  0.0f, 1.0f, 0.0f,  25.0f,  0.0f,
+			-25.0f, -0.5f,  25.0f,  0.0f, 1.0f, 0.0f,   0.0f,  0.0f,
+			-25.0f, -0.5f, -25.0f,  0.0f, 1.0f, 0.0f,   0.0f, 25.0f,
+
+			 25.0f, -0.5f,  25.0f,  0.0f, 1.0f, 0.0f,  25.0f,  0.0f,
+			-25.0f, -0.5f, -25.0f,  0.0f, 1.0f, 0.0f,   0.0f, 25.0f,
+			 25.0f, -0.5f, -25.0f,  0.0f, 1.0f, 0.0f,  25.0f, 25.0f
+		};
+
+		auto plane_va = VertexArrayLibrary::load("plane");
+		std::shared_ptr<VertexBuffer> plane_vb = VertexBuffer::create(planeVertices, sizeof(planeVertices));
+		plane_vb->set_layout({
+			{ShaderDataType::Float3, "a_Position"},
+			{ShaderDataType::Float3, "a_Normal"},
+			{ShaderDataType::Float2, "a_TexCoord"}
+			});
+		plane_va->add_vertex_buffer(plane_vb);
+		//cube
+		float vertices[] = {
+			// back face
+			-1.0f, -1.0f, -1.0f,  0.0f,  0.0f, -1.0f, 0.0f, 0.0f, // bottom-left
+			 1.0f,  1.0f, -1.0f,  0.0f,  0.0f, -1.0f, 1.0f, 1.0f, // top-right
+			 1.0f, -1.0f, -1.0f,  0.0f,  0.0f, -1.0f, 1.0f, 0.0f, // bottom-right         
+			 1.0f,  1.0f, -1.0f,  0.0f,  0.0f, -1.0f, 1.0f, 1.0f, // top-right
+			-1.0f, -1.0f, -1.0f,  0.0f,  0.0f, -1.0f, 0.0f, 0.0f, // bottom-left
+			-1.0f,  1.0f, -1.0f,  0.0f,  0.0f, -1.0f, 0.0f, 1.0f, // top-left
+			// front face
+			-1.0f, -1.0f,  1.0f,  0.0f,  0.0f,  1.0f, 0.0f, 0.0f, // bottom-left
+			 1.0f, -1.0f,  1.0f,  0.0f,  0.0f,  1.0f, 1.0f, 0.0f, // bottom-right
+			 1.0f,  1.0f,  1.0f,  0.0f,  0.0f,  1.0f, 1.0f, 1.0f, // top-right
+			 1.0f,  1.0f,  1.0f,  0.0f,  0.0f,  1.0f, 1.0f, 1.0f, // top-right
+			-1.0f,  1.0f,  1.0f,  0.0f,  0.0f,  1.0f, 0.0f, 1.0f, // top-left
+			-1.0f, -1.0f,  1.0f,  0.0f,  0.0f,  1.0f, 0.0f, 0.0f, // bottom-left
+			// left face
+			-1.0f,  1.0f,  1.0f, -1.0f,  0.0f,  0.0f, 1.0f, 0.0f, // top-right
+			-1.0f,  1.0f, -1.0f, -1.0f,  0.0f,  0.0f, 1.0f, 1.0f, // top-left
+			-1.0f, -1.0f, -1.0f, -1.0f,  0.0f,  0.0f, 0.0f, 1.0f, // bottom-left
+			-1.0f, -1.0f, -1.0f, -1.0f,  0.0f,  0.0f, 0.0f, 1.0f, // bottom-left
+			-1.0f, -1.0f,  1.0f, -1.0f,  0.0f,  0.0f, 0.0f, 0.0f, // bottom-right
+			-1.0f,  1.0f,  1.0f, -1.0f,  0.0f,  0.0f, 1.0f, 0.0f, // top-right
+			// right face
+			 1.0f,  1.0f,  1.0f,  1.0f,  0.0f,  0.0f, 1.0f, 0.0f, // top-left
+			 1.0f, -1.0f, -1.0f,  1.0f,  0.0f,  0.0f, 0.0f, 1.0f, // bottom-right
+			 1.0f,  1.0f, -1.0f,  1.0f,  0.0f,  0.0f, 1.0f, 1.0f, // top-right         
+			 1.0f, -1.0f, -1.0f,  1.0f,  0.0f,  0.0f, 0.0f, 1.0f, // bottom-right
+			 1.0f,  1.0f,  1.0f,  1.0f,  0.0f,  0.0f, 1.0f, 0.0f, // top-left
+			 1.0f, -1.0f,  1.0f,  1.0f,  0.0f,  0.0f, 0.0f, 0.0f, // bottom-left     
+			 // bottom face
+			 -1.0f, -1.0f, -1.0f,  0.0f, -1.0f,  0.0f, 0.0f, 1.0f, // top-right
+			  1.0f, -1.0f, -1.0f,  0.0f, -1.0f,  0.0f, 1.0f, 1.0f, // top-left
+			  1.0f, -1.0f,  1.0f,  0.0f, -1.0f,  0.0f, 1.0f, 0.0f, // bottom-left
+			  1.0f, -1.0f,  1.0f,  0.0f, -1.0f,  0.0f, 1.0f, 0.0f, // bottom-left
+			 -1.0f, -1.0f,  1.0f,  0.0f, -1.0f,  0.0f, 0.0f, 0.0f, // bottom-right
+			 -1.0f, -1.0f, -1.0f,  0.0f, -1.0f,  0.0f, 0.0f, 1.0f, // top-right
+			 // top face
+			 -1.0f,  1.0f, -1.0f,  0.0f,  1.0f,  0.0f, 0.0f, 1.0f, // top-left
+			  1.0f,  1.0f , 1.0f,  0.0f,  1.0f,  0.0f, 1.0f, 0.0f, // bottom-right
+			  1.0f,  1.0f, -1.0f,  0.0f,  1.0f,  0.0f, 1.0f, 1.0f, // top-right     
+			  1.0f,  1.0f,  1.0f,  0.0f,  1.0f,  0.0f, 1.0f, 0.0f, // bottom-right
+			 -1.0f,  1.0f, -1.0f,  0.0f,  1.0f,  0.0f, 0.0f, 1.0f, // top-left
+			 -1.0f,  1.0f,  1.0f,  0.0f,  1.0f,  0.0f, 0.0f, 0.0f  // bottom-left        
+		};
+		auto cube_va = VertexArrayLibrary::load("xxx");
+		std::shared_ptr<VertexBuffer> cube_vb = VertexBuffer::create(vertices, sizeof(vertices));
+		cube_vb->set_layout({
+			{ShaderDataType::Float3, "a_Position"},
+			{ShaderDataType::Float3, "a_Normal"},
+			{ShaderDataType::Float2, "a_TexCoord"}
+			});
+		cube_va->add_vertex_buffer(cube_vb);
+		//quad
+		float quadVertices[] = {
+			// positions        // texture Coords
+			-1.0f,  1.0f, 0.0f, 0.0f, 1.0f,
+			-1.0f, -1.0f, 0.0f, 0.0f, 0.0f,
+			 1.0f,  1.0f, 0.0f, 1.0f, 1.0f,
+			 1.0f, -1.0f, 0.0f, 1.0f, 0.0f,
+		};
+		auto quad_va = VertexArrayLibrary::load("yyy");
+		std::shared_ptr<VertexBuffer> quad_vb = VertexBuffer::create(quadVertices, sizeof(quadVertices));
+		quad_vb->set_layout({
+			{ShaderDataType::Float3, "a_Position"},
+			{ShaderDataType::Float2, "a_TexCoord"}
+			});
+		quad_va->add_vertex_buffer(quad_vb);
+		//texture
+		TextureLibrary::load("../../../../assets/textures/wood.png");
+		//fbo
+		depth_frame_buffer = FrameBuffer::create(m_width, m_height);
+		auto depth_map = Texture2D::create_depth_map(m_width, m_height);
+		depth_frame_buffer->attach(depth_map);
+		depth_frame_buffer->check();
+		depth_frame_buffer->unbind();
 	}
 }

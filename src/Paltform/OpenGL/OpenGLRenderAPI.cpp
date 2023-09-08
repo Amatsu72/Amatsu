@@ -4,33 +4,33 @@
 
 namespace Engine {
 
-	static GLenum op_to_gl_type(RenderAPI::GLOp op)
+	static GLenum op_to_gl_type(RenderAPI::Op op)
 	{
 		switch (op)
 		{
-			case Engine::RenderAPI::GLOp::DECR:			return GL_DECR;
-			case Engine::RenderAPI::GLOp::DECR_WRAP:	return GL_DECR_WRAP;
-			case Engine::RenderAPI::GLOp::INCR:			return GL_INCR;
-			case Engine::RenderAPI::GLOp::INCR_WRAP:	return GL_INCR_WRAP;
-			case Engine::RenderAPI::GLOp::INVERT:		return GL_INVERT;
-			case Engine::RenderAPI::GLOp::KEEP:			return GL_KEEP;
-			case Engine::RenderAPI::GLOp::REPLACE:		return GL_REPLACE;
-			case Engine::RenderAPI::GLOp::ZERO:			return GL_ZERO;
+			case Engine::RenderAPI::Op::DECR:			return GL_DECR;
+			case Engine::RenderAPI::Op::DECR_WRAP:		return GL_DECR_WRAP;
+			case Engine::RenderAPI::Op::INCR:			return GL_INCR;
+			case Engine::RenderAPI::Op::INCR_WRAP:		return GL_INCR_WRAP;
+			case Engine::RenderAPI::Op::INVERT:			return GL_INVERT;
+			case Engine::RenderAPI::Op::KEEP:			return GL_KEEP;
+			case Engine::RenderAPI::Op::REPLACE:		return GL_REPLACE;
+			case Engine::RenderAPI::Op::ZERO:			return GL_ZERO;
 		}
 	}
 
-	static GLenum func_to_gl_type(RenderAPI::GLFunc func)
+	static GLenum func_to_gl_type(RenderAPI::Func func)
 	{
 		switch (func)
 		{
-			case Engine::RenderAPI::GLFunc::NEVER:		return GL_NEVER;
-			case Engine::RenderAPI::GLFunc::LESS:		return GL_LESS;
-			case Engine::RenderAPI::GLFunc::LEQUAL:		return GL_LEQUAL;
-			case Engine::RenderAPI::GLFunc::GREATER:	return GL_GREATER;
-			case Engine::RenderAPI::GLFunc::GEQUAL:		return GL_GEQUAL;
-			case Engine::RenderAPI::GLFunc::EQUAL:		return GL_EQUAL;
-			case Engine::RenderAPI::GLFunc::NOTEQUAL:	return GL_NOTEQUAL;
-			case Engine::RenderAPI::GLFunc::ALWAYS:		return GL_ALWAYS;
+			case Engine::RenderAPI::Func::NEVER:		return GL_NEVER;
+			case Engine::RenderAPI::Func::LESS:			return GL_LESS;
+			case Engine::RenderAPI::Func::LEQUAL:		return GL_LEQUAL;
+			case Engine::RenderAPI::Func::GREATER:		return GL_GREATER;
+			case Engine::RenderAPI::Func::GEQUAL:		return GL_GEQUAL;
+			case Engine::RenderAPI::Func::EQUAL:		return GL_EQUAL;
+			case Engine::RenderAPI::Func::NOTEQUAL:		return GL_NOTEQUAL;
+			case Engine::RenderAPI::Func::ALWAYS:		return GL_ALWAYS;
 		}
 	}
 
@@ -46,16 +46,14 @@ namespace Engine {
 		glViewport(x, y, width, height);
 	}
 
-	void OpenGLRenderAPI::clear()
+	void OpenGLRenderAPI::clear(bool color, bool depth, bool stencil)
 	{
-		if (m_stencil_test && m_depth_test)
-			glClear(GL_COLOR_BUFFER_BIT | GL_DEPTH_BUFFER_BIT | GL_STENCIL_BUFFER_BIT);
-		else if (m_stencil_test)
-			glClear(GL_COLOR_BUFFER_BIT | GL_STENCIL_BUFFER_BIT);
-		else if (m_depth_test)
-			glClear(GL_COLOR_BUFFER_BIT | GL_DEPTH_BUFFER_BIT);
-		else
+		if(color)
 			glClear(GL_COLOR_BUFFER_BIT);
+		if(depth)
+			glClear(GL_DEPTH_BUFFER_BIT);
+		if(stencil)
+			glClear(GL_STENCIL_BUFFER_BIT);			
 	}
 
 	void OpenGLRenderAPI::set_clear_color(const glm::vec4& color)
@@ -107,9 +105,7 @@ namespace Engine {
 
 	void OpenGLRenderAPI::set_stencil_test(bool s)
 	{
-		m_stencil_test = s;
-
-		if (m_stencil_test)
+		if (s)
 			glEnable(GL_STENCIL_TEST);
 		else
 			glDisable(GL_STENCIL_TEST);
@@ -117,15 +113,13 @@ namespace Engine {
 
 	void OpenGLRenderAPI::set_depth_test(bool d)
 	{
-		m_depth_test = d;
-
-		if (m_depth_test)
+		if (d)
 			glEnable(GL_DEPTH_TEST);
 		else
 			glDisable(GL_DEPTH_TEST);
 	}
 
-	void OpenGLRenderAPI::set_depth_func(GLFunc func)
+	void OpenGLRenderAPI::set_depth_func(Func func)
 	{
 		glDepthFunc(func_to_gl_type(func));
 	}
@@ -140,15 +134,13 @@ namespace Engine {
 
 	void OpenGLRenderAPI::set_cull_face(bool c)
 	{
-		m_cull_face = c;
-
-		if (m_cull_face)
+		if (c)
 			glEnable(GL_CULL_FACE);
 		else
 			glDisable(GL_CULL_FACE);
 	}
 
-	void OpenGLRenderAPI::set_stencil_func(GLFunc func, int value, unsigned int mask)
+	void OpenGLRenderAPI::set_stencil_func(Func func, int value, unsigned int mask)
 	{
 		glStencilFunc(func_to_gl_type(func), value, mask);
 	}
@@ -158,7 +150,7 @@ namespace Engine {
 		glStencilMask(mask);
 	}
 
-	void OpenGLRenderAPI::set_stencil_op(GLOp sfail, GLOp dfail, GLOp pass)
+	void OpenGLRenderAPI::set_stencil_op(Op sfail, Op dfail, Op pass)
 	{
 		glStencilOp(op_to_gl_type(sfail), op_to_gl_type(dfail), op_to_gl_type(pass));
 	}
